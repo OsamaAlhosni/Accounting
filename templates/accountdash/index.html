@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize  %}
+
+{% block content %}
+
+
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class=" small-box bg-info text-right">
+          <div class="inner">
+            <h3>{{all_invoice_amount }}</h3>
+
+            <p>إجمالي قيمة فواتير البيع</p>
+          </div>
+          <div class="icon">
+            <i class="x ion ion-bag text-left"></i>
+          </div>
+          <a href="{% url 'invoice_list' %}" class="small-box-footer">معلومات أكثر <i
+              class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success text-right">
+          <div class="inner">
+            <h3>{{all_receipt_amount}}<sup style="font-size: 20px"></sup></h3>
+
+            <p>إجمالي المبالغ المحصلة</p>
+          </div>
+          <div class="icon">
+            <i class="x ion ion-stats-bars text-left"></i>
+          </div>
+          <a href="{% url 'receipt_list' %}" class="small-box-footer">معلومات أكثر <i
+              class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning text-right">
+          <div class="inner">
+            <h3>44</h3>
+
+            <p>عدد الخدمات التي تم بيعها</p>
+          </div>
+          <div class="icon">
+            <i class="x ion ion-cash text-left"></i>
+          </div>
+          <a href="#" class="small-box-footer">معلومات أكثر <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger text-right">
+          <div class="inner">
+            <h3>{{all_customer}}</h3>
+
+            <p>عدد الزبائن</p>
+          </div>
+          <div class="icon">
+            <i class="x ion ion-person-add text-left"></i>
+          </div>
+          <a href="#" class="small-box-footer">معلومات أكثر <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+      <div class="col-md-6">
+        <h1>dddd</h1>
+        <canvas id="invoice-chart"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="receipt-chart"></canvas>
+      </div>
+
+    </div>
+    <!-- /.row (main row) -->
+  </div><!-- /.container-fluid -->
+</section>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script> -->
+<script>
+
+  var config = {
+    type: 'bar',
+    data: {
+      datasets: [{
+        data: {{ data|safe }},
+        backgroundColor: [
+        "rgba(255, 99, 132, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(255, 206, 86, 0.2)",
+        "rgba(75, 192, 192, 0.2)",
+        "rgba(153, 102, 255, 0.2)",
+       "rgba(255, 159, 64, 0.2)",
+  ],borderColor: [
+  "rgba(255, 99, 132, 1)",
+  "rgba(54, 162, 235, 1)",
+  "rgba(255, 206, 86, 1)",
+  "rgba(75, 192, 192, 1)",
+  "rgba(153, 102, 255, 1)",
+  "rgba(255, 159, 64, 1)",
+],
+borderWidth: 1,
+hoverBorderWidth: 3,
+hoverBorderColor: "#000",
+    label: 'إجمالي المبيعات'
+        }],
+  labels: {{ labels|safe }}
+      },
+  options: {
+    title: {
+      display: true,
+      text: "إجمالي المبيعات ",
+      fontFamily: "Lato",
+    },
+    responsive: true,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  }
+    };
+    window.onload = function () {
+      var ctx = document.getElementById('invoice-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+      var ctx1 = document.getElementById('bar-chart').getContext('2d');
+      window.myPie = new Chart(ctx1, config1);
+
+    };
+
+    var config1 = {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: {{ rdata|safe }},
+          backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+         "rgba(255, 159, 64, 0.2)",
+    ],borderColor: [
+    "rgba(255, 99, 132, 1)",
+    "rgba(54, 162, 235, 1)",
+    "rgba(255, 206, 86, 1)",
+    "rgba(75, 192, 192, 1)",
+    "rgba(153, 102, 255, 1)",
+    "rgba(255, 159, 64, 1)",
+  ],
+  borderWidth: 1,
+  hoverBorderWidth: 3,
+  hoverBorderColor: "#000",
+      label: 'إجمالي ايرادات التحصيل'
+          }],
+    labels: {{ rlabels|safe }}
+        },
+    options: {
+      title: {
+        display: true,
+        text: "إجمالي إيرادات التحصيل ",
+        fontFamily: "Lato",
+      },
+      responsive: true,
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    }
+      };
+      window.onload = function () {
+        var ctx = document.getElementById('invoice-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+        var ctx1 = document.getElementById('receipt-chart').getContext('2d');
+        window.myPie = new Chart(ctx1, config1);
+  
+      };
+  
+</script>
+
+{% endblock content %}

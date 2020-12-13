@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+  <div class="card card-primary ">
+    <div class="card-header">
+      <h3 class="card-title">ايصالات القبض</h3>
+    </div>
+    <div class="card-body ">
+      <form class="my-form" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group row">
+          <label class="col-12 col-form-label text-right" for="id_{{ field.name }}">{{ field.label }}</label>
+          <div class="col-12">
+            {% if field.name == 'receipt_date' %}
+            <input type="date" class="form-control text-right shadow p-4 mb-4 bg-white" name="{{ field.name }}"
+              id="id_{{ field.name }}" value="{{ field.value|date:'Y-m-d' }}">
+            {% else %}
+            <input type="{{ field.field.widget.input_type }}" class="form-control text-right  shadow p-4 mb-4 bg-white"
+              name="{{ field.name }}" id="id_{{ field.name }}" value="{{ field.value|default:'' }}">
+            {% endif %}
+          </div>
+          <div class="col-12 help-text">{{ field.help_text }} </div>
+        </div>
+        {% endfor %}
+        <!-- <div class="card-footer"> -->
+        <!-- <div class="col-12 "> -->
+        <button type="submit" class="btn btn-success btn-lg float-right">حفظ التعديلات</button>
+        <a class="btn btn-danger btn-lg float-left" href="{% url 'receipt_list' %}">العودة إلى القائمة</a>
+
+        <!-- </div> -->
+        <!-- </div> -->
+      </form>
+    </div>
+  </div>
+</div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">تحميل ملف الفواتير</h3>
+  </div>
+
+  <form action={% url 'upload_invoice' %} method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card-body text-right">
+      <label for="myfile">الرجاء إختيار ملف الفواتير بصيغة اكسيل</label>
+      <div class="form-group text-right">
+        <input type="file" name="myfile" id="myfile">
+        <!-- <label class="custom-file-label" for="myfile"></label> -->
+      </div>
+      <div class="card-footer text-right">
+        <button type="submit" class="btn btn-block btn-outline-info btn-lg">تحميل البيانات</button>
+        <!-- <button type="submit" class="btn btn-primary">تحميل</button> -->
+      </div>
+    </div>
+</div>
+</form>
+
+{% if page_obj %}
+<div class="row">
+  <div class="col-12 table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Customer ID</th>
+          <th>Customer Name</th>
+          <th>Balance</th>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>Priod</th>
+          <th>Invoice No</th>
+          <th>Invoice Amount</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for invoice  in page_obj  %}
+        <tr>
+          <td>{{invoice.customer_id}}</td>
+          <td>{{invoice.customer_name}}</td>
+          <td>{{invoice.balance}}</td>
+          <td>{{invoice.from_date}}</td>
+          <td>{{invoice.balance_to}}</td>
+          <td>{{invoice.proid}}</td>
+          <td>{{invoice.Invoice_no}}</td>
+          <td>{{invoice.invoice_amount}}</td>
+          <td>{{invoice.notes}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="card-footer clearfix">
+      {% if page_obj.has_other_pages %}
+      <ul class="pagination pagination-sm m-0 float-right">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">«</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">السابق</a></li>
+        {% endif %}
+        {% for i in page_obj.paginator.page_range %}
+        {% if page_obj.number == i %}
+        <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+        {% elif i > page_obj.number|add:'-10' and i < page_obj.number|add:'10' %}
+        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+        {% endif %}
+
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">التالي</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">»</a></li>
+        {% endif %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-md-4 offset-4">
+    <a type="button" class="btn btn-block btn-outline-success btn-lg" href="{% url 'save_to_database' %}">حفظ في قاعدة
+      البيانات</a>
+  </div>
+  <!-- /.col -->
+</div>
+
+{% else %}
+<div class="col-md-12 text-right">
+  <p>لا توجد فواتير محملة</p>
+</div>
+{% endif %}
+
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- bs-custom-file-input -->
+<script src="{% static 'plugins/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'js/demo.js' %}"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    bsCustomFileInput.init();
+  });
+</script>
+{% endblock content %}
