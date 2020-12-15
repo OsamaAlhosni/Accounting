@@ -54,5 +54,11 @@ def index(request):
         'rlabels': rlabels,
         'rdata': rdata,
     }
-    print(all_invoice_amount)
+    
     return render(request, 'accountdash/index.html', context)
+
+def index2(request):
+    return render(request,'ticket/index2.html')
+
+def ticket_list(request):
+    return render(request,'ticket/ticket.html')

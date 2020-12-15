@@ -85,6 +85,12 @@
       </div>
 
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+      </div>
+      
+    </div>
     <!-- /.row (main row) -->
   </div><!-- /.container-fluid -->
 </section>
@@ -136,13 +142,6 @@ hoverBorderColor: "#000",
     },
   }
     };
-    window.onload = function () {
-      var ctx = document.getElementById('invoice-chart').getContext('2d');
-      window.myPie = new Chart(ctx, config);
-      var ctx1 = document.getElementById('bar-chart').getContext('2d');
-      window.myPie = new Chart(ctx1, config1);
-
-    };
 
     var config1 = {
       type: 'bar',
@@ -189,13 +188,43 @@ hoverBorderColor: "#000",
       },
     }
       };
+
+var config2 = {
+
+  type: 'bar',
+  data: {
+    labels: ["2017", "2018", "2019", "2020"],
+    datasets: [
+      {
+        label: "شركة المدار",
+        backgroundColor: "#3e95cd",
+        data: [133,221,783,2478]
+      }, {
+        label: "شركة ليبيانا",
+        backgroundColor: "#8e5ea2",
+        data: [408,547,675,734]
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'الايرادات والديون (millions)'
+    }
+  }
+
+
+};
       window.onload = function () {
         var ctx = document.getElementById('invoice-chart').getContext('2d');
         window.myPie = new Chart(ctx, config);
         var ctx1 = document.getElementById('receipt-chart').getContext('2d');
         window.myPie = new Chart(ctx1, config1);
+        var ctx2 = document.getElementById('bar-chart-grouped').getContext('2d');
+        window.myPie = new Chart(ctx2, config2);
   
       };
+      
   
 </script>
 
