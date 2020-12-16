@@ -98,7 +98,7 @@
 <script>
 
   var config = {
-    type: 'bar',
+    type: 'doughnut',
     data: {
       datasets: [{
         data: {{ data|safe }},
@@ -196,11 +196,11 @@ var config2 = {
     labels: ["2017", "2018", "2019", "2020"],
     datasets: [
       {
-        label: "شركة المدار",
+        label: "المبيعات",
         backgroundColor: "#3e95cd",
         data: [133,221,783,2478]
       }, {
-        label: "شركة ليبيانا",
+        label: "المبالغ المحصلة",
         backgroundColor: "#8e5ea2",
         data: [408,547,675,734]
       }
