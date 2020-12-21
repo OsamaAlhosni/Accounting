@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'invoices',
     'import_export',
     'casa',
+    'customer',
+    'treasury',
 
 
 ]

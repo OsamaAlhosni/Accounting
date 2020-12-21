@@ -4,71 +4,50 @@
 
 {% block content %}
 
-<body class="hold-transition sidebar-mini">
-  <div class="wrapper">
-    <!-- Navbar -->
-    <!-- /.navbar -->
+<body>
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="card-title text-success"><strong> ايصالات القبض </strong></h2>
+          <br>
+          <hr>
+        </div>
+        <div class="col-md-8 offset-2 text-righ">
 
-    <!-- Main Sidebar Container -->
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- left column -->
-            <div class="col-md-6">
-              <!-- general form elements -->
-              <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">ايصالات القبض</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form">
-                  {{form.as_p}}
-                  <!-- <div class="card-body">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">رقم الإيصال</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">التاريخ</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">القيمة</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-
-                  </div> -->
-                  <!-- /.card-body -->
-
-                  <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                </form>
-              </div>
-              <!-- /.card -->
-
-
+          <form action="{% url 'add_receipt' %}" role="form" method="POST">
+            {% csrf_token %}
+            <div class="form-group text-right">
+              <label for="receipt_no">رقم الإيصال</label>
+              <input type="text" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_no"
+                name="receipt_no" placeholder="أدخل رقم الإيصال">
+              <label for="receipt_date">التاريخ</label>
+              <input type="date" class="form-control text-right shadow p-4 mb-4 bg-white" name="receipt_date"
+                id="receipt_date">
+              <label for="receipt_amount">القيمة</label>
+              <input type="number" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_amount"
+                name="receipt_amount" placeholder="قيمة الإيصال" step="0.01">
+              <label>إسم الجهة</label>
+              <select class="form-control select2 text-right " style="width: 100%;" id="customer_name" name="customer_name">
+                
+                {% for customer in customers %}
+                <option value="{{customer.pk}}">{{customer.customer_name}}</option>
+                {% endfor %}
+                  
+              </select>
+              <label for="receipt_note">ملاحظات</label>
+              <input type="text" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_note"
+                name="receipt_note" placeholder="ملاحظات">
 
             </div>
-            <!--/.col (left) -->
-          </div>
-          <!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+            <input type="submit" value="حفظ" class="btn btn-success btn-lg float-right">
+            <a class="btn btn-danger btn-lg float-left" href="{% url 'index' %}">العودة إلى القائمة</a>
+          </form>
+        </div>
+      </div>
+    </section>
   </div>
-  <!-- ./wrapper -->
 
-  <!-- jQuery -->
 </body>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Invoice
+from .models import Invoice,Customer
 
 from django.contrib import messages
 from tablib import Dataset
@@ -45,9 +45,14 @@ def upload_invoice(request):
                 invoice_amount = 0.0
             invoice_amount = decimal.Decimal(invoice_amount)
             notes = data[9]
+            
+            try:
+                find_customer = Customer.objects.get(pk=customer_id)
+            except Customer.DoesNotExist:
+                find_customer =  Customer.objects.get(pk=1)
             try:
                 Invoice.objects.create(
-                    customer_id=customer_id, customer_name=customer_name, from_date=from_date, balance_to=balance_to, proid=proid, tyear=year, Invoice_no=Invoice_no, invoice_amount=invoice_amount, notes=notes, balance=balance)
+                    customer_id=find_customer, customer_name=customer_name, from_date=from_date, balance_to=balance_to, proid=proid, tyear=year, Invoice_no=Invoice_no, invoice_amount=invoice_amount, notes=notes, balance=balance)
 
             except TypeError as e:
                 print(e)

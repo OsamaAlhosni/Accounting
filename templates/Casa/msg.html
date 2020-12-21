@@ -3,7 +3,7 @@
 
 
 {% block content %}
-<div class="col-md-6">
+<div class="col-md-12 text-right">
   <div class="card card-default">
     <div class="card-header">
       <h3 class="card-title">
@@ -13,17 +13,15 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-      <div class="alert alert-danger alert-dismissible">
+      <div class="alert {{alert}} alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-        Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my
-        entire
-        soul, like these sweet mornings of spring which I enjoy with my whole heart.
+        <h5><i class="icon fas fa-ban"></i> خطأ</h5>
+        {{error}}
       </div>
     </div>
     <div class="card-footer">
       <!-- <div class="col-12 "> -->
-      <a class="btn btn-danger btn-lg float-left" href="{% url 'receipt_list' %}">العودة إلى القائمة</a>
+      <a class="btn btn-danger btn-lg float-left" href="{{ request.META.HTTP_REFERER }}">العودة إلى القائمة</a>
 
     </div>
     <!-- </div> -->

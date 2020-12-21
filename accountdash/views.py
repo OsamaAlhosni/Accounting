@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from invoices.models import Invoice
 from casa.models import Receipt
+from customer import Customer
 from django.db.models import Count, Sum
 
 from django.contrib.humanize.templatetags.humanize import intcomma
@@ -25,11 +26,16 @@ def index(request):
         sum=Sum('receipt_amount')).get('sum')
     if all_receipt_amount:
         all_receipt_amount = f"د.ل {intcomma('{:0.3f}'.format(all_receipt_amount))}"
+    else:
+        all_receipt_amount = 0        
 
     # Total All invoices
     all_invoice_amount = Invoice.objects.aggregate(
         sum=Sum('invoice_amount')).get('sum')
-    all_invoice_amount = f"{intcomma('{:0.3f}'.format(all_invoice_amount))} د.ل "
+    if all_invoice_amount:
+        all_invoice_amount = f"{intcomma('{:0.3f}'.format(all_invoice_amount))} د.ل "
+    else:
+        all_invoice_amount = 0
 
     # Total Invoice used in Chart
     queryset = Invoice.objects.filter(invoice_amount__gt= 0).values('customer_name').annotate(
@@ -39,10 +45,11 @@ def index(request):
         data.append(float(entry['total_sales']))
 
     # Total Receipts used in Charts
-    queryset = Receipt.objects.filter(receipt_amount__gt= 0).values('customer_name').annotate(
-        total_receipt=Sum('receipt_amount')).order_by('customer_name')[:5]
+    queryset = Receipt.objects.filter(receipt_amount__gt= 0).values('customer').annotate(
+        total_receipt=Sum('receipt_amount')).order_by('customer')[:5]
     for entry in queryset:
-       rlabels.append(entry['customer_name'])
+       customer_name = Customer.objects.filter(id=entry['customer']) 
+       rlabels.append(customer_name)
        rdata.append(float(entry['total_receipt']))
    
     context = {

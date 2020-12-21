@@ -1,8 +1,8 @@
 from django.db import models
-
+from customer.models import Customer
 
 class Invoice(models.Model):
-    customer_id = models.IntegerField()
+    customer_id = models.ForeignKey(Customer,on_delete=models.CASCADE)
     customer_name = models.CharField(max_length=200, null=True, blank=True)
     from_date = models.DateField(
         null=True, blank=True)
@@ -23,7 +23,3 @@ class Invoice(models.Model):
         return self.customer_name
         # , self.Invoice_no, self.proid, self.invoice_amount
 
-class Customer(models.Model):
-    customer_name = models.CharField(max_length=200, null=False, blank=False)
-    beginig_balance = models.DecimalField(max_digits=19,decimal_places=3,null=True,blank=True)
-    is_active = models.BooleanField(default=True)

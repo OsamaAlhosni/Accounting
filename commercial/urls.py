@@ -6,6 +6,7 @@ urlpatterns = [
     path('', include('accountdash.urls')),
     path('invoices/', include('invoices.urls')),
     path('casa/', include('casa.urls')),
+    path('customer/', include('customer.urls')),
     path('admin/', admin.site.urls),
 
 ]

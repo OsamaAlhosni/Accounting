@@ -1,19 +1,39 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import ReceiptForm
 from .models import Receipt
-
+from customer.models import Customer
 from django.core.paginator import Paginator
 
 
 def add_receipt(request):
-    form = ReceiptForm()
+    # form = ReceiptForm()
+    # if request.method == 'POST':
+    #     form = ReceiptForm(request.POST)
+    #     print(form)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('receipt_list')
+    customers = Customer.objects.all()
     if request.method == 'POST':
-        form = ReceiptForm(request.POST)
-        print(form)
-        if form.is_valid():
-            form.save()
-            return redirect('receipt_list')
-    return render(request, 'casa/add_r.html', {'form': form})
+        receipt_no = request.POST.get('receipt_no')
+        receipt_date = request.POST.get('receipt_date')
+        receipt_amount = request.POST.get('receipt_amount')
+        customer_id = request.POST.get('customer_name')
+        receipt_notes = request.POST.get('receipt_note')
+        if receipt_no == "" or receipt_date == "" or receipt_amount == "" or customer_id == "":
+            error = 'جميع الحقول إجبارية ويجب إدخالها'
+            alert = 'alert-danger'
+            url_back = '{% url add_receipt %}'
+            context = {
+                'error': error,
+                'alert': alert,
+                'url_back': url_back
+            }
+            return render(request, 'casa/msg.html', context)
+        receipt = Receipt(receipt_no=receipt_no, receipt_date=receipt_date,
+                          receipt_amount=receipt_amount, receipt_notes=receipt_notes, customer_id=customer_id)
+        receipt.save()
+    return render(request, 'casa/add_receipt.html', {'customers': customers})
 
 
 def receipt_list(request):

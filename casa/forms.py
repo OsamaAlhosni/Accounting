@@ -1,32 +1,25 @@
 from django import forms
 from django.forms import fields
 from .models import Receipt
+from customer.models import Customer
 
 
 class ReceiptForm(forms.ModelForm):
+    receipt_no = forms.CharField(max_length=128, help_text="Please enter the name.")
+    receipt_date = forms.CharField(max_length=128, help_text="Please enter the name of the autthor.")
+    receipt_amount = forms.SlugField(help_text="Please enter the slug")
+    customer_id = forms.ModelChoiceField(queryset=Customer.objects.values('customer_name'))
+    receipt_notes = forms.CharField(max_length=128, help_text="Please enter the name of the autthor.")
+    customer_name = forms.CharField(max_length=128, help_text="Please enter the name of the autthor.")
+    
+    def save(self, commit=True):
+       instance = super().save(commit=False)
+       pub = self.cleaned_data['customer_id']
+       instance.customer_id = pub[0]
+       instance.save(commit)
+       return instance
+
     class Meta:
         model = Receipt
-        fields = [
-            'receipt_no',
-            'receipt_date',
-            'receipt_amount',
-            'receipt_notes',
-            'customer_name',
-            'customer_id',
-
-        ]
-        labels = {
-            'receipt_no': 'رقم الإيصال',
-            'receipt_date': 'التاريخ',
-            'receipt_amount': 'القيمة',
-            'receipt_notes': 'ملاحظات',
-        }
-        widgets = {
-            'receipt_no': forms.TextInput(attrs={'class': 'form-control text-right', 'id': 'inputEstimatedBudget'},),
-            'receipt_date': forms.DateInput(attrs={'class': 'form-control text-right'}),
-            'receipt_amount': forms.NumberInput(attrs={'class': 'form-control text-right', 'step': '0.1'}),
-            'receipt_notes': forms.TextInput(attrs={'class': 'form-control text-right'}),
-            'customer_name': forms.TextInput(attrs={'class': 'form-control text-right'}),
-            'customer_id': forms.TextInput(attrs={'class': 'form-control text-right'}),
-
-        }
+        fields = ('receipt_no', 'receipt_date','receipt_amount','customer_id')
+    
