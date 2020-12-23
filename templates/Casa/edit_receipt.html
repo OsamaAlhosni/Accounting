@@ -3,40 +3,51 @@
 
 
 {% block content %}
-<div class="container">
-  <div class="card card-primary ">
-    <div class="card-header">
-      <h3 class="card-title">ايصالات القبض</h3>
-    </div>
-    <div class="card-body ">
-      <form class="my-form" method="POST">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="form-group row">
-          <label class="col-12 col-form-label text-right" for="id_{{ field.name }}">{{ field.label }}</label>
-          <div class="col-12">
-            {% if field.name == 'receipt_date' %}
-            <input type="date" class="form-control text-right shadow p-4 mb-4 bg-white" name="{{ field.name }}"
-              id="id_{{ field.name }}" value="{{ field.value|date:'Y-m-d' }}">
-            {% else %}
-            <input type="{{ field.field.widget.input_type }}" class="form-control text-right  shadow p-4 mb-4 bg-white"
-              name="{{ field.name }}" id="id_{{ field.name }}" value="{{ field.value|default:'' }}">
-            {% endif %}
-          </div>
-          <div class="col-12 help-text">{{ field.help_text }} </div>
+
+<body>
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="card-title text-success"><strong> ايصالات القبض </strong></h2>
+          <br>
+          <hr>
         </div>
-        {% endfor %}
-        <!-- <div class="card-footer"> -->
-        <!-- <div class="col-12 "> -->
-        <button type="submit" class="btn btn-success btn-lg float-right">حفظ التعديلات</button>
-        <a class="btn btn-danger btn-lg float-left" href="{% url 'receipt_list' %}">العودة إلى القائمة</a>
+        <div class="col-md-8 offset-2 text-righ">
 
-        <!-- </div> -->
-        <!-- </div> -->
-      </form>
-    </div>
+          <form action="{% url 'add_receipt' %}" role="form" method="POST">
+            {% csrf_token %}
+            <div class="form-group text-right">
+              <label for="receipt_no">رقم الإيصال</label>
+              <input type="text" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_no"
+                name="receipt_no" placeholder="أدخل رقم الإيصال">
+              <label for="receipt_date">التاريخ</label>
+              <input type="date" class="form-control text-right shadow p-4 mb-4 bg-white" name="receipt_date"
+                id="receipt_date">
+              <label for="receipt_amount">القيمة</label>
+              <input type="number" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_amount"
+                name="receipt_amount" placeholder="قيمة الإيصال" step="0.01">
+              <label>إسم الجهة</label>
+              <select class="form-control select2 text-right " style="width: 100%;" id="customer_name" name="customer_name">
+                
+                {% for customer in customers %}
+                <option value="{{customer.pk}}">{{customer.customer_name}}</option>
+                {% endfor %}
+                  
+              </select>
+              <label for="receipt_note">ملاحظات</label>
+              <input type="text" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_note"
+                name="receipt_note" placeholder="ملاحظات">
+
+            </div>
+            <input type="submit" value="حفظ" class="btn btn-success btn-lg float-right">
+            <a class="btn btn-danger btn-lg float-left" href="{% url 'index' %}">العودة إلى القائمة</a>
+          </form>
+        </div>
+      </div>
+    </section>
   </div>
-</div>
 
-</div>
+</body>
+
 {% endblock %}

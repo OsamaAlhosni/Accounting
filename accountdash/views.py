@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from invoices.models import Invoice
 from casa.models import Receipt
-from customer import Customer
+from customer.models import Customer
 from django.db.models import Count, Sum
 
 from django.contrib.humanize.templatetags.humanize import intcomma
@@ -48,8 +48,8 @@ def index(request):
     queryset = Receipt.objects.filter(receipt_amount__gt= 0).values('customer').annotate(
         total_receipt=Sum('receipt_amount')).order_by('customer')[:5]
     for entry in queryset:
-       customer_name = Customer.objects.filter(id=entry['customer']) 
-       rlabels.append(customer_name)
+       customer = Customer.objects.get(id=entry['customer']) 
+       rlabels.append(customer.customer_name)
        rdata.append(float(entry['total_receipt']))
    
     context = {
