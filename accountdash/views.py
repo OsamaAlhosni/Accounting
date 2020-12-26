@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from invoices.models import Invoice
 from casa.models import Receipt
-from customer.models import Customer
-from django.db.models import Count, Sum
+from customer.models import Customer, CustomerCatogry
+from django.db.models import Sum, Max
 
 from django.contrib.humanize.templatetags.humanize import intcomma
 
@@ -17,6 +17,15 @@ def index(request):
     rlabels = []
     rdata = []
 
+    # Total Invoice By Catagory
+    cat_label = []
+    cat_data = []
+
+    # Total Invoices & payment
+    total_invoice_label = []
+    total_invoice_date = []
+    total_payment_label = []
+    total_payment_data = []
     # All customer count
     all_customer = Invoice.objects.values_list(
         'customer_name').order_by('customer_name').distinct().count()
@@ -27,7 +36,7 @@ def index(request):
     if all_receipt_amount:
         all_receipt_amount = f"د.ل {intcomma('{:0.3f}'.format(all_receipt_amount))}"
     else:
-        all_receipt_amount = 0        
+        all_receipt_amount = 0
 
     # Total All invoices
     all_invoice_amount = Invoice.objects.aggregate(
@@ -38,20 +47,54 @@ def index(request):
         all_invoice_amount = 0
 
     # Total Invoice used in Chart
-    queryset = Invoice.objects.filter(invoice_amount__gt= 0).values('customer_name').annotate(
-        total_sales=Sum('invoice_amount')).order_by('customer_name')[:5]
+    queryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+        total_sales=Sum('invoice_amount')).order_by('-total_sales')[:5]
+
     for entry in queryset:
         labels.append(entry['customer_name'])
         data.append(float(entry['total_sales']))
 
     # Total Receipts used in Charts
-    queryset = Receipt.objects.filter(receipt_amount__gt= 0).values('customer').annotate(
+    queryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
         total_receipt=Sum('receipt_amount')).order_by('customer')[:5]
     for entry in queryset:
-       customer = Customer.objects.get(id=entry['customer']) 
-       rlabels.append(customer.customer_name)
-       rdata.append(float(entry['total_receipt']))
-   
+        customer = Customer.objects.get(id=entry['customer'])
+        rlabels.append(customer.customer_name)
+        rdata.append(float(entry['total_receipt']))
+
+    # Total Invoices By Customer Catagory
+    queryset = Invoice.objects.values('customer_id__customer_cat__type_desc').annotate(
+        total_sales=Sum('invoice_amount')).order_by('-total_sales')[:5]
+    for entry in queryset:
+        cat_label.append(entry['customer_id__customer_cat__type_desc'])
+        cat_data.append(float(entry['total_sales']))
+
+    # Total Sales & Receipts
+
+    # First get total invoices for each customer
+    invoices = Invoice.objects.all()[:5]
+    for invoice in invoices:
+        i_total = Invoice.objects.annotate(total_sales=Sum('invoice_amount')).filter(customer_id_id =invoice.customer_id_id)
+        r_total = Receipt.objects.annotate( total_receipt=Sum('receipt_amount')).filter(customer_id = invoice.customer_id_id)
+        if r_total :
+            for j in r_total:
+                total_payment_data.append(float(j.total_receipt))
+        else:
+            total_payment_label.append(float(0))
+            
+        for i in i_total:
+            total_invoice_label.append(i.customer_name)
+            total_invoice_date.append(float(i.total_sales))
+
+            
+        
+    all_data = {
+        'total_invoice': total_invoice_date,
+        'total_receipt': total_payment_label
+    }
+    print(all_data)
+
+
     context = {
         'all_customer': all_customer,
         'all_invoice_amount': all_invoice_amount,
@@ -60,12 +103,19 @@ def index(request):
         'data': data,
         'rlabels': rlabels,
         'rdata': rdata,
+        'cat_label': cat_label,
+        'cat_data': cat_data,
+        'total_invoice': total_invoice_date,
+        'total_receipt': total_payment_data,
+        'total_invoice_label': total_invoice_label,
     }
-    
+
     return render(request, 'accountdash/index.html', context)
 
+
 def index2(request):
-    return render(request,'ticket/index2.html')
+    return render(request, 'ticket/index2.html')
+
 
 def ticket_list(request):
-    return render(request,'ticket/ticket.html')
+    return render(request, 'ticket/ticket.html')

@@ -79,11 +79,15 @@ def edit_receipt(request, receipt_id):
                 'url_back': url_back
             }
             return render(request, 'casa/msg.html', context)
-        receipt = Receipt(receipt_no=receipt_no, receipt_date=receipt_date,
-                          receipt_amount=receipt_amount, receipt_notes=receipt_notes, customer_id=customer_id)
+        receipt.receipt_no=receipt_no
+        receipt.receipt_date=receipt_date
+        receipt.receipt_amount=receipt_amount
+        receipt.receipt_notes=receipt_notes
+        receipt.customer_id=customer_id
         receipt.save()
-    # return render(request, 'casa/add_receipt.html',{'customers':customers} )
-    return redirect('receipt_list')
+        return redirect('receipt_list')
+    return render(request, 'casa/edit_receipt.html',{'customers':customers,'receipt':receipt} )
+    
 
 def delete_receipt(request, receipt_id):
     receipt = get_object_or_404(Receipt, pk=receipt_id)

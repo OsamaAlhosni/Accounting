@@ -15,29 +15,33 @@
         </div>
         <div class="col-md-8 offset-2 text-righ">
 
-          <form action="{% url 'add_receipt' %}" role="form" method="POST">
+          <form  role="form" method="POST">
             {% csrf_token %}
             <div class="form-group text-right">
               <label for="receipt_no">رقم الإيصال</label>
               <input type="text" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_no"
-                name="receipt_no" placeholder="أدخل رقم الإيصال">
+                name="receipt_no" value="{{receipt.receipt_no}}" placeholder="أدخل رقم الإيصال">
               <label for="receipt_date">التاريخ</label>
-              <input type="date" class="form-control text-right shadow p-4 mb-4 bg-white" name="receipt_date"
+              <input type="date" class="form-control text-right shadow p-4 mb-4 bg-white" name="receipt_date" value="{{receipt.receipt_date|date:'Y-m-d'}}"
                 id="receipt_date">
               <label for="receipt_amount">القيمة</label>
               <input type="number" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_amount"
-                name="receipt_amount" placeholder="قيمة الإيصال" step="0.01">
+                name="receipt_amount" value="{{receipt.receipt_amount}}" placeholder="قيمة الإيصال" step="0.01">
               <label>إسم الجهة</label>
               <select class="form-control select2 text-right " style="width: 100%;" id="customer_name" name="customer_name">
                 
                 {% for customer in customers %}
-                <option value="{{customer.pk}}">{{customer.customer_name}}</option>
+                <option value="{{customer.pk}}" 
+                {% if customer.pk == receipt.customer_id  %}
+                selected
+                {% endif %}
+                   >{{customer.customer_name}}</option>
                 {% endfor %}
                   
               </select>
               <label for="receipt_note">ملاحظات</label>
               <input type="text" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_note"
-                name="receipt_note" placeholder="ملاحظات">
+                name="receipt_note" value="{{receipt.receipt_notes}}" placeholder="ملاحظات">
 
             </div>
             <input type="submit" value="حفظ" class="btn btn-success btn-lg float-right">

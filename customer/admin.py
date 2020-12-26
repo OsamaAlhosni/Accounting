@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Customer
+from .models import Customer,CustomerCatogry
 
 
-admin.site.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('customer_name', 'beginig_balance', 'customer_cat','is_active')
+
+
+admin.site.register(Customer,CustomerAdmin)
+admin.site.register(CustomerCatogry)

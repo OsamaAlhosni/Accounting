@@ -77,24 +77,106 @@
     <!-- Main row -->
     <div class="row">
       <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+                <!-- <h3 class="card-title">Area Chart</h3> -->
+                <h3 class="card-title1 text-center">أكبر 5 زبائن في قيمة المبيعات</h3>      
+                <div class="card-tools">
+                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                          <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                          </button>
         
-        <canvas id="invoice-chart"></canvas>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart">
+                    <canvas id="invoice-chart" height="500" ></canvas>
+                </div>
+            </div>
+                      <!-- /.card-body -->
+          </div>
+                    <!-- /.card -->
       </div>
       <div class="col-md-6">
-        <canvas id="receipt-chart"></canvas>
-      </div>
+        <div class="card card-success">
+          <div class="card-header">
+            <!-- <h3 class="card-title">Area Chart</h3> -->
+            <h3 class="card-title1 text-center">إجمالي المبالغ المحصلة</h3>      
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+              </button>
 
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart" >
+              <canvas id="receipt-chart" height="500"></canvas>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
     </div>
+    
     <div class="row">
       <div class="col-md-6">
-        <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+        <div class="card card-info">
+          <div class="card-header">
+              <!-- <h3 class="card-title">Area Chart</h3> -->
+              <h3 class="card-title1 text-center">إجمالي الإيرادات والمبالغ المحصلة</h3>      
+              <div class="card-tools">
+                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                      </button>
+        
+              </div>
+          </div>
+          <div class="card-body">
+              <div class="chart">
+                  <canvas id="bar-chart-grouped" height="500" ></canvas>
+              </div>
+          </div>
+                    <!-- /.card-body -->
+        </div>
+                  <!-- /.card -->
+
+        <!-- <canvas id="bar-chart-grouped" width="800" height="450"></canvas> -->
       </div>
+      <div class="col-md-6">
+        <div class="card card-success">
+          <div class="card-header">
+              <h3 class="card-title1 text-center">إجمالي الإيرادات حسب نوع الزبون</h3>
+      
+              <div class="card-tools">
+                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+              <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+              </button>
+
+              </div>
+          </div>
+          <div class="card-body">
+              <div class="chart">
+                  <canvas id="invoice-catagory-amount" height="500"></canvas>
+              </div>
+          </div>
+                    <!-- /.card-body -->
+        </div>
+                  <!-- /.card -->
+        
+      </div>
+
       
     </div>
     <!-- /.row (main row) -->
   </div><!-- /.container-fluid -->
 </section>
-<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script> -->
+
 <script>
 
   var config = {
@@ -103,12 +185,12 @@
       datasets: [{
         data: {{ data|safe }},
         backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-       "rgba(255, 159, 64, 0.2)",
+        "rgba(255, 99, 132)",
+        "rgba(54, 162, 235)",
+        "rgba(255, 206, 86)",
+        "rgba(75, 192, 192)",
+        "rgba(153, 102, 255)",
+       "rgba(255, 159, 64)",
   ],borderColor: [
   "rgba(255, 99, 132, 1)",
   "rgba(54, 162, 235, 1)",
@@ -131,15 +213,7 @@ hoverBorderColor: "#000",
       fontFamily: "Lato",
     },
     responsive: true,
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
+    maintainAspectRatio: false,
   }
     };
 
@@ -149,13 +223,13 @@ hoverBorderColor: "#000",
         datasets: [{
           data: {{ rdata|safe }},
           backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-         "rgba(255, 159, 64, 0.2)",
-    ],borderColor: [
+          "rgba(255, 99, 132)",
+          "rgba(54, 162, 235)",
+          "rgba(255, 206, 86)",
+          "rgba(75, 192, 192)",
+          "rgba(153, 102, 255)",
+         "rgba(255, 159, 64)",
+      ],borderColor: [
     "rgba(255, 99, 132, 1)",
     "rgba(54, 162, 235, 1)",
     "rgba(255, 206, 86, 1)",
@@ -172,16 +246,36 @@ hoverBorderColor: "#000",
         },
     options: {
       title: {
-        display: true,
+        display: false,
         text: "إجمالي إيرادات التحصيل ",
         fontFamily: "Lato",
       },
+      tooltips: {
+        callbacks: {
+              label: function(tooltipItem, data) {
+                  var value = data.datasets[0].data[tooltipItem.index];
+                  if(parseInt(value) >= 1000){
+                             return 'د.ل' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                          } else {
+                             return 'د.ل' + value;
+                          }
+              }
+        } // end callbacks:
+      }, //end tooltips  
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         yAxes: [
           {
             ticks: {
               beginAtZero: true,
+              callback: function(value, index, values) {
+                if(parseInt(value) >= 1000){
+                   return 'د.ل' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                } else {
+                   return 'د.ل' + value;
+                }
+           } 
             },
           },
         ],
@@ -193,28 +287,95 @@ var config2 = {
 
   type: 'bar',
   data: {
-    labels: ["2017", "2018", "2019", "2020"],
+    labels: {{ total_invoice_label|safe }},
     datasets: [
       {
         label: "المبيعات",
         backgroundColor: "#3e95cd",
-        data: [133,221,783,2478]
+        data: {{ total_invoice|safe }}
       }, {
         label: "المبالغ المحصلة",
         backgroundColor: "#8e5ea2",
-        data: [408,547,675,734]
+        data: {{ total_receipt|safe }}
       }
     ]
   },
   options: {
     title: {
       display: true,
-      text: 'الايرادات والديون (millions)'
-    }
+      text: 'الايرادات والمبالغ المحصلة '
+    },
+    responsive: true,
+    maintainAspectRatio: false,
   }
-
-
 };
+  var total_invoices_by_catogry = {
+    type: 'horizontalBar',
+    data: {
+      datasets: [{
+        data: {{ cat_data|safe }},
+        backgroundColor: [
+        "rgba(255, 99, 132,0.8)",
+        "rgba(54, 162, 235,0.8)",
+        "rgba(255, 206, 86)",
+        "rgba(75, 192, 192)",
+        "rgba(153, 102, 255)",
+       "rgba(255, 159, 64)",
+  ],borderColor: [
+  "rgba(255, 99, 132, 1)",
+  "rgba(54, 162, 235, 1)",
+  "rgba(255, 206, 86, 1)",
+  "rgba(75, 192, 192, 1)",
+  "rgba(153, 102, 255, 1)",
+  "rgba(255, 159, 64, 1)",
+],
+borderWidth: 1,
+hoverBorderWidth: 3,
+hoverBorderColor: "#000",
+    label: 'إجمالي الإيرادات حسب تصنيف الزبائن'
+        }],
+  labels: {{ cat_label|safe }}
+      },
+  options: {
+    title: {
+      display: true,
+      text: "إجمالي الإيرادات حسب تصنيف الزبائن ",
+      fontFamily: "Lato",
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    tooltips: {
+      callbacks: {
+            label: function(tooltipItem, data) {
+                var value = data.datasets[0].data[tooltipItem.index];
+                if(parseInt(value) >= 1000){
+                           return 'د.ل' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                           return 'د.ل' + value;
+                        }
+            }
+      } // end callbacks:
+    }, //end tooltips  
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            callback: function(value, index, values) {
+              if(parseInt(value) >= 1000){
+                 return 'د.ل' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              } else {
+                 return 'د.ل' + value;
+              }
+         } 
+          
+          },
+        },
+      ],
+    },
+  }
+    };
+
       window.onload = function () {
         var ctx = document.getElementById('invoice-chart').getContext('2d');
         window.myPie = new Chart(ctx, config);
@@ -222,6 +383,8 @@ var config2 = {
         window.myPie = new Chart(ctx1, config1);
         var ctx2 = document.getElementById('bar-chart-grouped').getContext('2d');
         window.myPie = new Chart(ctx2, config2);
+        var ctx3 = document.getElementById('invoice-catagory-amount').getContext('2d');
+        window.myPie = new Chart(ctx3, total_invoices_by_catogry);
   
       };
       
