@@ -1,364 +1,364 @@
-
 {% extends 'base.html' %}
 {% load static %}
-{% load humanize  %}
+{% load humanize %}
 
 {% block content %}
 
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-<div class="wrapper">
+  <div class="wrapper">
 
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">البلاغات</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">البلاغات v2</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">البلاغات</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">البلاغات v2</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Info boxes -->
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Info boxes -->
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text">البلاغات المفتوحة</span>
-                <span class="info-box-number">
-                  10
-                  <small>%</small>
-                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text">البلاغات المفتوحة</span>
+                  <span class="info-box-number">
+                    10
+                    <small>%</small>
+                  </span>
+                </div>
+                <!-- /.info-box-content -->
               </div>
-              <!-- /.info-box-content -->
+              <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text">بلاغات تم معالجتها</span>
-                <span class="info-box-number">41,410</span>
+                <div class="info-box-content">
+                  <span class="info-box-text">بلاغات تم معالجتها</span>
+                  <span class="info-box-number">41,410</span>
+                </div>
+                <!-- /.info-box-content -->
               </div>
-              <!-- /.info-box-content -->
+              <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
+            <!-- /.col -->
 
-          <!-- fix for small devices only -->
-          <div class="clearfix hidden-md-up"></div>
+            <!-- fix for small devices only -->
+            <div class="clearfix hidden-md-up"></div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-circle"></i></span>
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-circle"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text">بلاغات تحت الإجراء</span>
-                <span class="info-box-number">760</span>
+                <div class="info-box-content">
+                  <span class="info-box-text">بلاغات تحت الإجراء</span>
+                  <span class="info-box-number">760</span>
+                </div>
+                <!-- /.info-box-content -->
               </div>
-              <!-- /.info-box-content -->
+              <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-business-times"></i></span>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+              <div class="info-box mb-3">
+                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-business-times"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text">بلاغات معلقة</span>
-                <span class="info-box-number">2,000</span>
+                <div class="info-box-content">
+                  <span class="info-box-text">بلاغات معلقة</span>
+                  <span class="info-box-number">2,000</span>
+                </div>
+                <!-- /.info-box-content -->
               </div>
-              <!-- /.info-box-content -->
+              <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
+            <!-- /.col -->
           </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
+          <!-- /.row -->
 
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="card-title">Monthly Recap Report</h5>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Monthly Recap Report</h5>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                      <i class="fas fa-wrench"></i>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right" role="menu">
-                      <a href="#" class="dropdown-item">Action</a>
-                      <a href="#" class="dropdown-item">Another action</a>
-                      <a href="#" class="dropdown-item">Something else here</a>
-                      <a class="dropdown-divider"></a>
-                      <a href="#" class="dropdown-item">Separated link</a>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-wrench"></i>
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a href="#" class="dropdown-item">Action</a>
+                        <a href="#" class="dropdown-item">Another action</a>
+                        <a href="#" class="dropdown-item">Something else here</a>
+                        <a class="dropdown-divider"></a>
+                        <a href="#" class="dropdown-item">Separated link</a>
+                      </div>
                     </div>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
                   </div>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
                 </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-8">
-                    <p class="text-center">
-                      <strong>البلاغات المسجلة لسنة 2020</strong>
-                    </p>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <p class="text-center">
+                        <strong>البلاغات المسجلة لسنة 2020</strong>
+                      </p>
 
-                    <div class="chart">
-                      <!-- Sales Chart Canvas -->
-                      <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
+                      <div class="chart">
+                        <!-- Sales Chart Canvas -->
+                        <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
+                      </div>
+                      <!-- /.chart-responsive -->
                     </div>
-                    <!-- /.chart-responsive -->
+                    <!-- /.col -->
+                    <!-- /.col -->
                   </div>
-                  <!-- /.col -->
-                  <!-- /.col -->
+                  <!-- /.row -->
                 </div>
-                <!-- /.row -->
+                <!-- ./card-body -->
+                <!-- /.card-footer -->
               </div>
-              <!-- ./card-body -->
-              <!-- /.card-footer -->
+              <!-- /.card -->
             </div>
-            <!-- /.card -->
+            <!-- /.col -->
           </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
+          <!-- /.row -->
 
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <div class="col-md-8">
-            <div class="row">
-              <div class="col-md-6">
-              </div>
-              <!-- /.col -->
-
-              <div class="col-md-6">
-              </div>
-              <!-- /.col -->
-            </div>
-            <div class="card">
-              <div class="card-header border-transparent">
-                <h3 class="card-title">اخر البلاغات</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+          <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+            <div class="col-md-8">
+              <div class="row">
+                <div class="col-md-6">
                 </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table m-0">
-                    <thead>
-                    <tr>
-                      <th>رقم البلاغ</th>
-                      <th>اجهة المبلغة</th>
-                      <th>حالة الباغ</th>
-                      <th>الأولوية</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>تجربة 1</td>
-                      <td><span class="badge badge-success">قفلت التذكرة</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>تجربة</td>
-                      <td><span class="badge badge-warning">تحت الدراسة</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>تجربة</td>
-                      <td><span class="badge badge-danger">تمت المعالجة</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>تجربة</td>
-                      <td><span class="badge badge-info">العمل مستمر</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">في الإنتظار</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="badge badge-danger">تمت المعالجة</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">قفلت التذكرة</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
+                <!-- /.col -->
+
+                <div class="col-md-6">
                 </div>
-                <!-- /.table-responsive -->
+                <!-- /.col -->
               </div>
-              <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">عرض تفاصيل البلاغ</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">عرض البلاغات المفتوحة فقط</a>
+              <div class="card">
+                <div class="card-header border-transparent">
+                  <h3 class="card-title">اخر البلاغات</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table m-0">
+                      <thead>
+                        <tr>
+                          <th>رقم البلاغ</th>
+                          <th>اجهة المبلغة</th>
+                          <th>حالة الباغ</th>
+                          <th>الأولوية</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                          <td>تجربة 1</td>
+                          <td><span class="badge badge-success">قفلت التذكرة</span></td>
+                          <td>
+                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                          <td>تجربة</td>
+                          <td><span class="badge badge-warning">تحت الدراسة</span></td>
+                          <td>
+                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                          <td>تجربة</td>
+                          <td><span class="badge badge-danger">تمت المعالجة</span></td>
+                          <td>
+                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                          <td>تجربة</td>
+                          <td><span class="badge badge-info">العمل مستمر</span></td>
+                          <td>
+                            <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                          <td>Samsung Smart TV</td>
+                          <td><span class="badge badge-warning">في الإنتظار</span></td>
+                          <td>
+                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                          <td>iPhone 6 Plus</td>
+                          <td><span class="badge badge-danger">تمت المعالجة</span></td>
+                          <td>
+                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                          <td>Call of Duty IV</td>
+                          <td><span class="badge badge-success">قفلت التذكرة</span></td>
+                          <td>
+                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.table-responsive -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                  <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">عرض تفاصيل البلاغ</a>
+                  <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">عرض البلاغات المفتوحة
+                    فقط</a>
+                </div>
+                <!-- /.card-footer -->
               </div>
-              <!-- /.card-footer -->
+              <!-- /.card -->
             </div>
-            <!-- /.card -->
           </div>
+          <!-- /.row -->
         </div>
-        <!-- /.row -->
-      </div><!--/. container-fluid -->
-    </section>
-    <!-- /.content -->
+        <!--/. container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
   </div>
-  <!-- /.content-wrapper -->
+  <!-- ./wrapper -->
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+  <!-- REQUIRED SCRIPTS -->
+  <!-- jQuery -->
+  <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+  <!-- Bootstrap -->
+  <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- overlayScrollbars -->
+  <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'js/adminlte.js' %}"></script>
 
-</div>
-<!-- ./wrapper -->
+  <!-- OPTIONAL SCRIPTS -->
+  <script src="{% static 'js/demo.js' %}"></script>
 
-<!-- REQUIRED SCRIPTS -->
-<!-- jQuery -->
-<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
-<!-- Bootstrap -->
-<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- overlayScrollbars -->
-<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{% static 'js/adminlte.js' %}"></script>
+  <!-- PAGE PLUGINS -->
+  <!-- jQuery Mapael -->
+  <script src="{% static 'plugins/jquery-mousewheel/jquery.mousewheel.js' %}"></script>
+  <script src="{% static 'plugins/raphael/raphael.min.js' %}"></script>
+  <script src="{% static 'plugins/jquery-mapael/jquery.mapael.min.js' %}"></script>
+  <script src="{% static 'plugins/jquery-mapael/maps/usa_states.min.js' %}"></script>
+  <!-- ChartJS -->
+  <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
 
-<!-- OPTIONAL SCRIPTS -->
-<script src="{% static 'js/demo.js' %}"></script>
+  <!-- PAGE SCRIPTS -->
+  <script src="{% static 'js/pages/dashboard2.js' %}"></script>
+  <script>
+    var config = {
+      type: 'line',
+      data: {
+        labels: ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو'],
+        datasets: [
+          {
+            label: 'Digital Goods',
+            backgroundColor: 'rgba(60,141,188,0.9)',
+            borderColor: 'rgba(60,141,188,0.8)',
+            pointRadius: false,
+            pointColor: '#3b8bba',
+            pointStrokeColor: 'rgba(60,141,188,1)',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data: [28, 48, 40, 19, 86, 27, 90]
+          },
+          {
+            label: 'Electronics',
+            backgroundColor: 'rgba(210, 214, 222, 1)',
+            borderColor: 'rgba(210, 214, 222, 1)',
+            pointRadius: false,
+            pointColor: 'rgba(210, 214, 222, 1)',
+            pointStrokeColor: '#c1c7d1',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data: [65, 59, 80, 81, 56, 55, 40]
+          },
+        ]
 
-<!-- PAGE PLUGINS -->
-<!-- jQuery Mapael -->
-<script src="{% static 'plugins/jquery-mousewheel/jquery.mousewheel.js' %}"></script>
-<script src="{% static 'plugins/raphael/raphael.min.js' %}"></script>
-<script src="{% static 'plugins/jquery-mapael/jquery.mapael.min.js' %}"></script>
-<script src="{% static 'plugins/jquery-mapael/maps/usa_states.min.js' %}"></script>
-<!-- ChartJS -->
-<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
-
-<!-- PAGE SCRIPTS -->
-<script src="{% static 'js/pages/dashboard2.js' %}"></script>
-<script>
-  var config ={
-    type: 'line', 
-    data: {
-      labels  : ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو'],
-      datasets: [
-      {
-        label               : 'Digital Goods',
-        backgroundColor     : 'rgba(60,141,188,0.9)',
-        borderColor         : 'rgba(60,141,188,0.8)',
-        pointRadius          : false,
-        pointColor          : '#3b8bba',
-        pointStrokeColor    : 'rgba(60,141,188,1)',
-        pointHighlightFill  : '#fff',
-        pointHighlightStroke: 'rgba(60,141,188,1)',
-        data                : [28, 48, 40, 19, 86, 27, 90]
-      },
-      {
-        label               : 'Electronics',
-        backgroundColor     : 'rgba(210, 214, 222, 1)',
-        borderColor         : 'rgba(210, 214, 222, 1)',
-        pointRadius         : false,
-        pointColor          : 'rgba(210, 214, 222, 1)',
-        pointStrokeColor    : '#c1c7d1',
-        pointHighlightFill  : '#fff',
-        pointHighlightStroke: 'rgba(220,220,220,1)',
-        data                : [65, 59, 80, 81, 56, 55, 40]
-      },
-    ]
-
-  };
-  options: {
-    maintainAspectRatio : false,
-    responsive : true,
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        gridLines : {
-          display : false,
+      };
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display: false,
+            }
+          }],
+          yAxes: [{
+            gridLines: {
+              display: false,
+            }
+          }]
         }
-      }],
-      yAxes: [{
-        gridLines : {
-          display : false,
-        }
-      }]
-    }
-  };
-  window.onload = function () {
-    var ctx = document.getElementById('salesChart').getContext('2d');
-    window.myPie = new Chart(ctx, config);
-    
+      };
+      window.onload = function () {
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
 
-  };
-</script>
+
+      };
+  </script>
 </body>
 {% endblock content %}
-

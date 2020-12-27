@@ -79,14 +79,16 @@
       <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-header">
-                <!-- <h3 class="card-title">Area Chart</h3> -->
-                <h3 class="card-title1 text-center">أكبر 5 زبائن في قيمة المبيعات</h3>      
+              <div class="d-flex justify-content-between">
+                <a href="javascript:void(0);">عرض التقرير</a>
+                <h3 class="card-title1">أكبر 5 زبائن في قيمة المبيعات</h3>      
+              </div>
+  
                 <div class="card-tools">
                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                         </button>
                           <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
                           </button>
-        
                 </div>
             </div>
             <div class="card-body">
@@ -101,14 +103,15 @@
       <div class="col-md-6">
         <div class="card card-success">
           <div class="card-header">
-            <!-- <h3 class="card-title">Area Chart</h3> -->
-            <h3 class="card-title1 text-center">إجمالي المبالغ المحصلة</h3>      
+            <div class="d-flex justify-content-between">
+              <a href="javascript:void(0);">عرض التقرير</a>
+              <h3 class="card-title1">إجمالي المبالغ المحصلة</h3>      
+            </div>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
               </button>
               <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
               </button>
-
             </div>
           </div>
           <div class="card-body">
@@ -126,8 +129,10 @@
       <div class="col-md-6">
         <div class="card card-info">
           <div class="card-header">
-              <!-- <h3 class="card-title">Area Chart</h3> -->
-              <h3 class="card-title1 text-center">إجمالي الإيرادات والمبالغ المحصلة</h3>      
+            <div class="d-flex justify-content-between">
+              <a href="javascript:void(0);">عرض التقرير</a>
+              <h3 class="card-title1">إجمالي الإيرادات والمبالغ المحصلة</h3>      
+            </div>
               <div class="card-tools">
                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                       </button>
@@ -150,14 +155,15 @@
       <div class="col-md-6">
         <div class="card card-success">
           <div class="card-header">
+            <div class="d-flex justify-content-between">
+              <a href="javascript:void(0);">عرض التقرير</a>
               <h3 class="card-title1 text-center">إجمالي الإيرادات حسب نوع الزبون</h3>
-      
+            </div>
               <div class="card-tools">
                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                       </button>
-              <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
-              </button>
-
+                 <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                     </button>
               </div>
           </div>
           <div class="card-body">
@@ -170,9 +176,60 @@
                   <!-- /.card -->
         
       </div>
-
-      
     </div>
+    <div class="row">
+
+      <!-- <div class="col-md-6">
+        <div class="card card-info">
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+              <a href="javascript:void(0);">عرض التقرير</a>
+              <h3 class="card-title1">الرسم البياني لحركة المبيعات مقارنة بالعام الماضي</h3>      
+            </div>
+              <div class="card-tools">
+                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                      </button>
+              </div>
+          </div>
+          <div class="card-body">
+              <div class="chart">
+                  <canvas id="sales-lastyear" height="500" ></canvas>
+              </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="col-md-6">
+        <div class="card card-success">
+          <div class="card-header">
+              <!-- <h3 class="card-title1 text-center">إجمالي الإيرادات حسب نوع الزبون</h3> -->
+              <div class="d-flex justify-content-between">
+                <a href="javascript:void(0);">عرض التقرير</a>
+                <h3 class="card-title1">الرسم البياني لحركة المبيعات مقارنة بالعام الماضي</h3>      
+                
+              </div>
+              <div class="card-tools">
+                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+              <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+              </button>
+
+              </div>
+          </div>
+          <div class="card-body">
+              <div class="chart">
+                  <canvas id="sales-lastyeart" height="500"></canvas>
+              </div>
+          </div>
+                    <!-- /.card-body -->
+        </div>
+                  <!-- /.card -->
+        
+      </div>
+    </div>
+
     <!-- /.row (main row) -->
   </div><!-- /.container-fluid -->
 </section>
@@ -375,7 +432,57 @@ hoverBorderColor: "#000",
     },
   }
     };
-
+    var sales_last_year = {
+      type: 'bar',
+      data: {
+        labels: ['الفترة الأولى', 'الفترة الثانية', 'الفترة الثالثة', 'لفترة الرابعة'],
+        datasets: [
+          {
+            label: 'العام الماضي',
+            backgroundColor: 'rgba(60,141,188,0.9)',
+            borderColor: 'rgba(60,141,188,0.8)',
+            pointRadius: false,
+            pointColor: '#3b8bba',
+            pointStrokeColor: 'rgba(60,141,188,1)',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data: [28, 48, 40, 19]
+          },
+          {
+            label: 'هذا العام',
+            backgroundColor: 'rgba(210, 214, 222, 1)',
+            borderColor: 'rgba(210, 214, 222, 1)',
+            pointRadius: false,
+            pointColor: 'rgba(210, 214, 222, 1)',
+            pointStrokeColor: '#c1c7d1',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data: [65, 59, 80, 81]
+          },
+        ]
+    
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display: false,
+            }
+          }],
+          yAxes: [{
+            gridLines: {
+              display: false,
+            }
+          }]
+        }
+      }
+    };
+    
       window.onload = function () {
         var ctx = document.getElementById('invoice-chart').getContext('2d');
         window.myPie = new Chart(ctx, config);
@@ -385,7 +492,9 @@ hoverBorderColor: "#000",
         window.myPie = new Chart(ctx2, config2);
         var ctx3 = document.getElementById('invoice-catagory-amount').getContext('2d');
         window.myPie = new Chart(ctx3, total_invoices_by_catogry);
-  
+        var sales_lastyear = document.getElementById('sales-lastyeart').getContext('2d');
+        window.myPie = new Chart(sales_lastyear, sales_last_year);
+        
       };
       
   
