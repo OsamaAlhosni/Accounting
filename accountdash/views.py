@@ -119,3 +119,6 @@ def index2(request):
 
 def ticket_list(request):
     return render(request, 'ticket/ticket.html')
+
+def sales_report(request):
+    return render(request,'accountdash/sales_report.html')

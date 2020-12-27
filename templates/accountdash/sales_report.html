@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize  %}
+
+{% block content %}
+
+
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-md-12">
+            <form action="">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>الفترة</label>
+                        <select class="form-control">
+                          <option>عرض الكل</option>
+                          <option>الربع الأول</option>                          
+                          <option>الربع الثاني</option>
+                          <option>الربع الثالث</option>
+                          <option>الربع الرابع</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>تصنيف الزبائن</label>
+                        <select class="form-control">
+                          <option>شركات القطاع</option>
+                          <option>جهات عامة</option>
+                          <option>قطاع خاص</option>
+                          <option>أخرى</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+      <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <div class="d-flex justify-content-between">
+                <a href="javascript:void(0);">عرض التقرير</a>
+                <h3 class="card-title1">أكبر 5 زبائن في قيمة المبيعات</h3>      
+              </div>
+                <div class="card-tools">
+                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                          <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                          </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart">
+                    <canvas id="invoice-chart" height="500" ></canvas>
+                </div>
+            </div>
+                      <!-- /.card-body -->
+          </div>
+                    <!-- /.card -->
+      </div>
+      <div class="col-md-6">
+        <div class="card card-success">
+          <div class="card-header">
+            <div class="d-flex justify-content-between">
+              <a href="javascript:void(0);">عرض التقرير</a>
+              <h3 class="card-title1">إجمالي المبالغ المحصلة</h3>      
+            </div>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart" >
+              <!-- <canvas id="receipt-chart" height="500"></canvas> -->
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+    
+    <!-- /.row (main row) -->
+  </div><!-- /.container-fluid -->
+</section>
+
+<script>
+
+  var config = {
+    type: 'doughnut',
+    data: {
+      datasets: [{
+        data: {{ data|safe }},
+        backgroundColor: [
+        "rgba(255, 99, 132)",
+        "rgba(54, 162, 235)",
+        "rgba(255, 206, 86)",
+        "rgba(75, 192, 192)",
+        "rgba(153, 102, 255)",
+       "rgba(255, 159, 64)",
+  ],borderColor: [
+  "rgba(255, 99, 132, 1)",
+  "rgba(54, 162, 235, 1)",
+  "rgba(255, 206, 86, 1)",
+  "rgba(75, 192, 192, 1)",
+  "rgba(153, 102, 255, 1)",
+  "rgba(255, 159, 64, 1)",
+],
+borderWidth: 1,
+hoverBorderWidth: 3,
+hoverBorderColor: "#000",
+    label: 'إجمالي المبيعات'
+        }],
+  labels: {{ labels|safe }}
+      },
+  options: {
+    title: {
+      display: true,
+      text: "إجمالي المبيعات ",
+      fontFamily: "Lato",
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  }
+    };
+
+    
+      window.onload = function () {
+        var ctx = document.getElementById('invoice-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+      };
+      
+  
+</script>
+
+{% endblock content %}
