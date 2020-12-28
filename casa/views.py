@@ -7,13 +7,6 @@ from django.core.paginator import Paginator
 
 
 def add_receipt(request):
-    # form = ReceiptForm()
-    # if request.method == 'POST':
-    #     form = ReceiptForm(request.POST)
-    #     print(form)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('receipt_list')
     customers = Customer.objects.all()
     
     if request.method == 'POST':
@@ -51,16 +44,6 @@ def receipt_list(request):
 
 def edit_receipt(request, receipt_id):
     receipt = get_object_or_404(Receipt, pk=receipt_id)
-    # if request.method == 'GET':
-    #     form = ReceiptForm(instance=receipt)
-    #     return render(request, 'casa/edit_receipt.html', {'form': form})
-    # else:
-    #     try:
-    #         form = ReceiptForm(request.POST, instance=receipt)
-    #         form.save()
-    #         return redirect('receipt_list')
-    #     except:
-    #         return render(request, 'casa/msg.html')
     customers = Customer.objects.all()
     
     if request.method == 'POST':
@@ -91,7 +74,6 @@ def edit_receipt(request, receipt_id):
 
 def delete_receipt(request, receipt_id):
     receipt = get_object_or_404(Receipt, pk=receipt_id)
-    # if request.method == 'POST':
     receipt.delete()
     return redirect('receipt_list')
 

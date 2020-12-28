@@ -86,15 +86,6 @@ def index(request):
             total_invoice_label.append(i.customer_name)
             total_invoice_date.append(float(i.total_sales))
 
-            
-        
-    all_data = {
-        'total_invoice': total_invoice_date,
-        'total_receipt': total_payment_label
-    }
-    print(all_data)
-
-
     context = {
         'all_customer': all_customer,
         'all_invoice_amount': all_invoice_amount,
