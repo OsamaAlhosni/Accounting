@@ -145,3 +145,8 @@ def mylogin(request):
 def mylogout(request):
     logout(request)
     return redirect('mylogin')
+
+def change_password(request):
+
+
+    return render(request,'accountdash/change_password.html')
