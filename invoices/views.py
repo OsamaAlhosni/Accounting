@@ -21,6 +21,10 @@ def parse_date(date_str):
 
 
 def upload_invoice(request):
+
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     if request.method == 'POST':
         dataset = Dataset()
         new_invoice = request.FILES["myfile"]
@@ -70,6 +74,10 @@ def upload_invoice(request):
 
 
 def invoice_list(request):
+
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     invoices = Invoice.objects.filter(commited=True)
     # context = {'invoices': invoices}
     paginator = Paginator(invoices, 8)
@@ -80,6 +88,10 @@ def invoice_list(request):
 
 
 def edit_invoice(request, invoice_id):
+
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name')
@@ -104,6 +116,10 @@ def edit_invoice(request, invoice_id):
 
 
 def save_to_database(request):
+
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     update_counts = Invoice.objects.filter(
         commited=False).update(commited=True)
     print(update_counts)
@@ -111,6 +127,10 @@ def save_to_database(request):
 
 
 def delete_invoice(request, invoice_id):
+
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     invoice.delete()
     return redirect('invoice_list')

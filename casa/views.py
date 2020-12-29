@@ -7,6 +7,9 @@ from django.core.paginator import Paginator
 
 
 def add_receipt(request):
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     customers = Customer.objects.all()
     
     if request.method == 'POST':
@@ -32,6 +35,9 @@ def add_receipt(request):
 
 
 def receipt_list(request):
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     receipts = Receipt.objects.all()
     # context = {
     #     'receipts': receipts
@@ -43,6 +49,10 @@ def receipt_list(request):
 
 
 def edit_receipt(request, receipt_id):
+
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     receipt = get_object_or_404(Receipt, pk=receipt_id)
     customers = Customer.objects.all()
     
@@ -73,6 +83,10 @@ def edit_receipt(request, receipt_id):
     
 
 def delete_receipt(request, receipt_id):
+
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     receipt = get_object_or_404(Receipt, pk=receipt_id)
     receipt.delete()
     return redirect('receipt_list')

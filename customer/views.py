@@ -5,6 +5,10 @@ from django.core.paginator import Paginator
 
 
 def customer_list(request):
+
+    if not request.user.is_authenticated:
+     return redirect('mylogin')
+
     customers = Customer.objects.all()
     paginator = Paginator(customers, 8)
     page_number = request.GET.get('page')
@@ -12,6 +16,10 @@ def customer_list(request):
     return render(request, 'customer/customer_list.html', {'page_obj': page_obj})
 
 def add_customer(request):
+
+  if not request.user.is_authenticated:
+     return redirect('mylogin')
+
   form = CustomerForm()
   if request.method == 'POST':
      form = CustomerForm(request.POST)
@@ -21,6 +29,10 @@ def add_customer(request):
   return render(request, 'customer/add_customer.html', {'form': form})
 
 def edit_customer(request,customer_id):
+
+  if not request.user.is_authenticated:
+     return redirect('mylogin')
+
   customer = get_object_or_404(Customer, pk=customer_id)
   if request.method == 'GET':
         form = CustomerForm(instance=customer)
@@ -34,5 +46,9 @@ def edit_customer(request,customer_id):
             return render(request, 'message/msg.html')
 
 def delete_customer(request,customer_id):
+
+  if not request.user.is_authenticated:
+     return redirect('mylogin')
+
   Customer.objects.filter(id=customer_id).delete()
   redirect('customer_list')
