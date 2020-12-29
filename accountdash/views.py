@@ -141,3 +141,7 @@ def mylogin(request):
                 return render(request,'accountdash/login.html',{'err':err})            
         
     return render(request,'accountdash/login.html')
+
+def mylogout(request):
+    logout(request)
+    return redirect('mylogin')
