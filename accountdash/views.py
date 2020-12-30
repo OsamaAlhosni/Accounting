@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from invoices.models import Invoice
 from casa.models import Receipt
 from customer.models import Customer, CustomerCatogry
+from django.contrib.auth.models import User
 from django.db.models import Sum, Max
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.humanize.templatetags.humanize import intcomma
@@ -147,6 +148,30 @@ def mylogout(request):
     return redirect('mylogin')
 
 def change_password(request):
+    if request.method == 'POST':
+        oldpassword = request.POST.get('old_password')
+        newpassword1 = request.POST.get('password1')
+        newpassword2=request.POST.get('password2')
+        if oldpassword == '' or newpassword1 == '' or newpassword2 == '':
+            err= 'جميع الحقول إجبارية'
+            return render(request,'accountdash/change_password.html',{'err':err})
+        else:
+            if newpassword1 != newpassword2 :
+                err = 'كلمة المرور غير متطابقة. يرجى إعادة الإدخال'
+                return render(request,'accountdash/change_password.html',{'err':err}) 
+            else:           
+                user = authenticate(username=request.user,password=oldpassword)
+                if user != None:
+                    user = User.objects.get(username=request.user)
+                    user.set_password(newpassword1)
+                    user.save()
+                    logout(request)
+                    return redirect('mylogin')
+                else:
+                    err = 'كلمة المرور القديمة غير صحيحة.. يرجى إعادة الإدخال'
+                    return render(request,'accountdash/change_password.html',{'err':err})            
+
+
 
 
     return render(request,'accountdash/change_password.html')
