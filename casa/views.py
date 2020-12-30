@@ -91,3 +91,7 @@ def delete_receipt(request, receipt_id):
 
 def msg(request):
     return render(request, 'casa/msg.html')
+
+def casa_search(request):
+
+    return render(request,'casa/casa_search.html')
