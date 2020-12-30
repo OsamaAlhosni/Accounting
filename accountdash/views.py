@@ -6,13 +6,10 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Max
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.humanize.templatetags.humanize import intcomma
+from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url='/mylogin')
 def index(request):
-
-        if not request.user.is_authenticated:
-            return redirect('mylogin')
-
 
         # Invoice Chart label & data
         labels = []
@@ -107,23 +104,18 @@ def index(request):
 
         return render(request, 'accountdash/index.html', context)
 
-
+@login_required(login_url='/mylogin')
 def index2(request):
-    if not request.user.is_authenticated:
-     return redirect('mylogin')
 
     return render(request, 'ticket/index2.html')
 
-
+@login_required(login_url='/mylogin')
 def ticket_list(request):
-    if not request.user.is_authenticated:
-     return redirect('mylogin')
 
     return render(request, 'ticket/ticket.html')
 
+@login_required(login_url='/mylogin')
 def sales_report(request):
-    if not request.user.is_authenticated:
-     return redirect('mylogin')
 
     return render(request,'accountdash/sales_report.html')
 
@@ -140,7 +132,6 @@ def mylogin(request):
             else:
                 err = 'خطأ في اسم المستخدم أو كلمة المرور'
                 return render(request,'accountdash/login.html',{'err':err})            
-        
     return render(request,'accountdash/login.html')
 
 def mylogout(request):
@@ -170,8 +161,4 @@ def change_password(request):
                 else:
                     err = 'كلمة المرور القديمة غير صحيحة.. يرجى إعادة الإدخال'
                     return render(request,'accountdash/change_password.html',{'err':err})            
-
-
-
-
     return render(request,'accountdash/change_password.html')

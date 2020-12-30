@@ -39,9 +39,6 @@ def receipt_list(request):
      return redirect('mylogin')
 
     receipts = Receipt.objects.all()
-    # context = {
-    #     'receipts': receipts
-    # }
     paginator = Paginator(receipts, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
