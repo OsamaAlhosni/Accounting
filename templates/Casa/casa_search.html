@@ -1,21 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize  %}
-
 {% block content %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>شاشة البحث</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
-
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
+</head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  
+
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper1">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <h2 class="text-center display-4">Enhanced Search</h2>
+        <h2 class="text-center display-4">البحث في ايصالات التحصيل</h2>
       </div>
       <!-- /.container-fluid -->
     </section>
@@ -27,38 +37,39 @@
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-3 text-right">
                                 <div class="form-group">
-                                    <label>عرض النتائج</label>
-                                    <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
-                                        <option>إيصالات قبض</option>
-                                        <option>Images</option>
-                                        <option>Video</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>فرز  :</label>
+                                    <label>نوع الزبون</label>
                                     <select class="select2" style="width: 100%;">
-                                        <option selected>تصاعدي</option>
-                                        <option>تنازلي</option>
+                                        <option selected>شركات القطاع</option>
+                                        <option>شركات عامة</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 text-right">
                                 <div class="form-group">
-                                    <label>ترتيب حسب :</label>
-                                    <select class="select2" style="width: 100%;">
-                                        <option selected>رقم الإيصال</option>
-                                        <option>التاريخ</option>
+                                    <label >إسم الزبون</label>
+                                    <select class="select2 " style="width: 100%;">
+                                        <option selected>شركة المدار</option>
+                                        <option>شركة الجيل</option>
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-6 text-right">
+                                <div class="form-group">
+                                    <label>نوع البحث</label>
+                                    <select class="select2" multiple="multiple" data-placeholder="في كل الحقول" style="width: 100%;">
+                                        <option>قيمة الإيصال</option>
+                                        <option>تاريخ الإيصال</option>
+                                        <option>ملاحظات</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="form-group">
                             <div class="input-group input-group-lg">
-                                <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" value="Lorem ipsum">
+                                <input type="search" class="form-control form-control-lg text-right" placeholder="اكتب كلمة البحث هنا" value="Lorem ipsum">
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-lg btn-default">
                                         <i class="fa fa-search"></i>
@@ -118,15 +129,25 @@
     </section>
   </div>
 
-  
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
 <!-- jQuery -->
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
-
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- Select2 -->
 <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
-
+<!-- AdminLTE App -->
+<script src="{% static 'js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'js/demo.js' %}"></script>
 <script>
     $(function () {
       $('.select2').select2()
@@ -134,3 +155,4 @@
 </script>
 </body>
 {% endblock %}
+</html>
