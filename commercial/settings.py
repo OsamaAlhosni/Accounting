@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'casa',
     'customer',
     'treasury',
+    'manager',
 
 
 ]
