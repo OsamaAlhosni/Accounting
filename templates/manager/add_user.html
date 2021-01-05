@@ -1,0 +1,62 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content%}
+<div class="card card-info">
+    <div class="card-header">
+      <h3 class="card-title">إضافة مستخدم جديد</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form class="form-horizontal" action="users_list" method="POST">
+      <div class="card-body text-right">
+        <div class="form-group row">
+          <div class="col-sm-6 offset-4">
+            <input type="text" class="form-control text-right" id="emp_no" name="emp_no" placeholder="أدخل الرقم الوظيفي">
+          </div>
+          <label for="emp_no" class="col-sm-2 col-form-label">الرقم الوظيفي</label>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6 offset-4">
+              <input type="text" class="form-control text-right" id="emp_name" name="emp_name" placeholder="أدخل إسم الموظف">
+            </div>
+            <label for="emp_name" class="col-sm-2 col-form-label">إسم الموظف</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6 offset-4">
+              <input type="email" class="form-control text-right" id="emp_email" name="emp_email" placeholder="أدخل البريد الإلكتروني">
+            </div>
+            <label for="emp_email" class="col-sm-2 col-form-label">البريد الإلكتروني</label>
+          </div>
+    
+          <div class="form-group row">
+            <div class="col-sm-6 offset-4">
+              <input type="password" class="form-control text-right" id="emp_password1" name="emp_password1" placeholder="أدخل كلمة المرور">
+            </div>
+            <label for="emp_password1" class="col-sm-2 col-form-label">كلمة المرور</label>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6 offset-4">
+              <input type="password" class="form-control text-right" id="emp_password2" name="emp_password2" placeholder="إعادة كلمة المرور">
+            </div>
+            <label for="emp_password2" class="col-sm-2 col-form-label">تأكيد كلمة المرور</label>
+          </div>
+            <div class="form-group row">
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+          <div class="col-md-6 offset-6">
+            <a class="btn  btn-outline-danger btn-lg" href="{% url 'users_list' %}"><i class="fas fa-undo"></i> تراجع  </a>  
+                       <!-- <button type="submit" class="btn btn-danger ">تراجع</button> -->
+            <a type="submit" class="btn  btn-outline-success btn-lg" href="{% url 'add_user' %}"><i class="fas fa-save"></i> حفظ  </a>                                              
+            <!-- <button type="submit" class="btn btn-info ">حفظ</button> -->
+    
+          </div>
+      </div>
+      <!-- /.card-footer -->
+    </form>
+  </div>
+  <!-- /.card -->
+
+</div>
+{% endblock %}
