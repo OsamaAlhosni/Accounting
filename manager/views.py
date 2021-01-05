@@ -26,6 +26,18 @@ def add_user(request):
         user_name= request.POST.get('emp_no')
         first_name = request.POST.get('emp_name')
         email = request.POST.get('emp_email')
+        password1 = request.POST.get('emp_password1')
+        password2 = request.POST.get('emp_password2')
+        if user_name == '' or first_name == '' or email == '' or password1 == '' or password2 == '':
+            err = 'جميع الحقول إجبارية'
+            return render(request,'manager/add_user.html',{'err':err})
+        if password1 != password2 :
+            err = 'كلمة المرور غير متابطقة'
+            return render(request,'manager/add_user.html',{'err':err})
+        user = User.objects.create_user(username=user_name,email=email,password=password1,first_name=first_name)
+        
+        return redirect('users_list')
+
     return render(request,'manager/add_user.html')
 
 def users_list(request):
