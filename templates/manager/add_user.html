@@ -8,6 +8,7 @@
     <!-- /.card-header -->
     <!-- form start -->
     <form class="form-horizontal"  method="POST">
+        {% csrf_token %}
       <div class="card-body text-right">
         <div class="form-group row">
           <div class="col-sm-6 offset-4">
@@ -47,7 +48,9 @@
       <div class="card-footer">
           <div class="col-md-6 offset-6">
             <a class="btn  btn-outline-danger btn-lg" href="{% url 'users_list' %}"><i class="fas fa-undo"></i> تراجع  </a>  
-            <a type="submit" class="btn  btn-outline-success btn-lg" href="{% url 'add_user' %}"><i class="fas fa-save"></i> حفظ  </a>
+            <!-- <input type="submit" value="حفظ" class="btn  btn-outline-success btn-lg"> -->
+            <button type="submit" class="btn  btn-outline-success btn-lg "><i class="fas fa-save"></i> حفظ</button>            
+            <!-- <a type="submit" class="btn  btn-outline-success btn-lg" href="{% url 'add_user' %}"><i class="fas fa-save"></i> حفظ  </a> -->
           </div>
       </div>
       <!-- /.card-footer -->
