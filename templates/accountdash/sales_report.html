@@ -27,16 +27,19 @@
             </div>
           </div>
           <div class="card-body">
-              <form action="">
+              <form action="{% url 'sales_report' %}" method="post">
+                {% csrf_token %}
                 <div class="row justify-content-start text-right">
                   <div class="col-md-6 ">
                     <div class="form-group">
                       <label >تصنيف الزبائن</label>
-                      <select class="form-control ">
-                        <option>شركات القطاع</option>
-                        <option>جهات عامة</option>
-                        <option>قطاع خاص</option>
-                        <option>أخرى</option>
+                      <select class="form-control"  name="cat">
+                        
+                        {% for cat in customer_cat %}
+                        <option value="{{cat.id}}">{{cat.type_desc}}</option>
+                          
+                        {% endfor %}
+                          
                       </select>
                     </div>
                   </div>
@@ -51,7 +54,7 @@
                   <div class="col-md-3 ">
                     <div class="form-group">
                       <label>الفترة</label>
-                      <select class="form-control">
+                      <select class="form-control" name='priod'>
                         <option value="0">عرض الكل</option>
                         <option value="1">الربع الأول</option>
                         <option value="2">الربع الثاني</option>
@@ -61,7 +64,7 @@
                     </div>
                   </div>
                 </div>
-                <button type="button" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
+                <button type="submit" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
             </form>
 
             <div class="chart">

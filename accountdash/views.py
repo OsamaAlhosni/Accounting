@@ -106,19 +106,28 @@ def index(request):
         return render(request, 'accountdash/index.html', context)
 
 @login_required(login_url='/mylogin')
+
 def index2(request):
 
     return render(request, 'ticket/index2.html')
 
 @login_required(login_url='/mylogin')
+
 def ticket_list(request):
 
     return render(request, 'ticket/ticket.html')
 
 @login_required(login_url='/mylogin')
-def sales_report(request):
 
-    return render(request,'accountdash/sales_report.html')
+def sales_report(request):
+    
+    customer_cat = CustomerCatogry.objects.all()
+
+    if request.method == 'POST':
+        priod = request.POST.get('priod')
+        cat= request.POST.get('cat')
+        print(priod,cat)
+    return render(request,'accountdash/sales_report.html',{'customer_cat':customer_cat})
 
 def mylogin(request):
     if request.method == 'POST':
