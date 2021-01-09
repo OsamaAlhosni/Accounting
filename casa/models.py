@@ -9,6 +9,8 @@ class Receipt(models.Model):
     receipt_notes = models.CharField(max_length=250, blank=True, null=True)
     receipt_created = models.DateField(auto_now_add=True)
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    priod = models.IntegerField(null=True,blank=True)
+    syear = models.IntegerField(null=True,blank=True)
     
 
    

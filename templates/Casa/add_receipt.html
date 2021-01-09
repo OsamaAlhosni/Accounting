@@ -1,53 +1,109 @@
-{% extends 'base.html' %}
-{% load static %}
-
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
 <body>
   <div class="content-wrapper">
     <section class="content">
       <div class="row">
         <div class="col-md-12">
-          <h2 class="card-title text-success"><strong> ايصالات القبض </strong></h2>
-          <br>
-          <hr>
+          <h2 class="card-title text-success">
+            <strong> ايصالات القبض </strong>
+          </h2>
+          <br />
+          <hr />
         </div>
         <div class="col-md-8 offset-2 text-righ">
-
           <form action="{% url 'add_receipt' %}" role="form" method="POST">
             {% csrf_token %}
             <div class="form-group text-right">
-              <label for="receipt_no">رقم الإيصال</label>
-              <input type="text" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_no"
-                name="receipt_no" placeholder="أدخل رقم الإيصال">
-              <label for="receipt_date">التاريخ</label>
-              <input type="date" class="form-control text-right shadow p-4 mb-4 bg-white" name="receipt_date"
-                id="receipt_date">
-              <label for="receipt_amount">القيمة</label>
-              <input type="number" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_amount"
-                name="receipt_amount" placeholder="قيمة الإيصال" step="0.001">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="receipt_date">التاريخ</label>
+                  <input
+                    type="date"
+                    class="form-control text-right shadow p-4 mb-4 bg-white"
+                    name="receipt_date"
+                    id="receipt_date"
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="receipt_no">رقم الإيصال</label>
+                  <input
+                    type="text"
+                    class="form-control text-right shadow p-4 mb-4 bg-white"
+                    id="receipt_no"
+                    name="receipt_no"
+                    placeholder="أدخل رقم الإيصال"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="receipt_year">السنة</label>
+                  <input
+                    type="number"
+                    class="form-control text-right shadow p-4 mb-4 bg-white"
+                    id="receipt_year"
+                    name="receipt_year"
+                    placeholder="السنة"
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="receipt_priod">الفترة</label>
+                  <input
+                    type="number"
+                    class="form-control text-right shadow p-4 mb-4 bg-white"
+                    id="receipt_priod"
+                    name="receipt_amount"
+                    placeholder="الفترة"
+                  />
+                </div>
+              </div>
+              <label for="receipt_priod">القيمة</label>
+              <input
+                type="number"
+                class="form-control text-right shadow p-4 mb-4 bg-white"
+                id="receipt_amount"
+                name="receipt_amount"
+                placeholder="قيمة الإيصال"
+                step="0.001"
+              />
               <label>إسم الجهة</label>
-              <select class="form-control select2 text-right " style="width: 100%;" id="customer_name" name="customer_name">
-                
+              <select
+                class="form-control select2 text-right"
+                style="width: 100%"
+                id="customer_name"
+                name="customer_name"
+              >
                 {% for customer in customers %}
-                <option value="{{customer.pk}}">{{customer.customer_name}}</option>
+                <option value="{{customer.pk}}">
+                  {{customer.customer_name}}
+                </option>
                 {% endfor %}
-                  
               </select>
               <label for="receipt_note">ملاحظات</label>
-              <input type="text" class="form-control text-right shadow p-4 mb-4 bg-white" id="receipt_note"
-                name="receipt_note" placeholder="ملاحظات">
-
+              <input
+                type="text"
+                class="form-control text-right shadow p-4 mb-4 bg-white"
+                id="receipt_note"
+                name="receipt_note"
+                placeholder="ملاحظات"
+              />
             </div>
-            <input type="submit" value="حفظ" class="btn btn-success btn-lg float-right">
-            <a class="btn btn-danger btn-lg float-left" href="{% url 'index' %}">العودة إلى القائمة</a>
+            <input
+              type="submit"
+              value="حفظ"
+              class="btn btn-success btn-lg float-right"
+            />
+            <a class="btn btn-danger btn-lg float-left" href="{% url 'index' %}"
+              >العودة إلى القائمة</a
+            >
           </form>
         </div>
       </div>
     </section>
   </div>
-
 </body>
 
 {% endblock %}

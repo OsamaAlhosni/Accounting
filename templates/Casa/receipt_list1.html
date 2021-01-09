@@ -35,6 +35,12 @@
                         <th style="width: 10%">
                           التاريخ
                         </th>
+                        <th style="width: 5%">
+                          السنة
+                        </th>
+                        <th style="width: 5%">
+                          الفترة
+                        </th>
                         <th style="width: 10%">
                           رقم الإيصال
                         </th>
@@ -71,6 +77,12 @@
                             {{receipt.receipt_date|date:'Y-m-d'}}
                           </a>
                           <br />
+                        </td>
+                        <td>
+                          {{receipt.priod}}
+                        </td>
+                        <td>
+                          {{receipt.syear}}
                         </td>
                         <td>
                           {{receipt.receipt_no}}

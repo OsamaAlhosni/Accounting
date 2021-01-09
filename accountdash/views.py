@@ -28,6 +28,7 @@ def index(request):
         total_invoice_date = []
         total_payment_label = []
         total_payment_data = []
+        
         # All customer count
         all_customer = Invoice.objects.values_list(
             'customer_name').order_by('customer_name').distinct().count()
