@@ -154,6 +154,82 @@ def sales_report(request):
         return render(request,'accountdash/sales_report.html',context)
     return render(request,'accountdash/sales_report.html',{'customer_cat':customer_cat})
 
+def receipt_report(request):
+
+    # Receipts Detail Chart label & data
+    labels = []
+    data = []
+    customer_cat = CustomerCatogry.objects.all()
+
+    if request.method == 'POST':
+        priod = request.POST.get('priod')
+        cat= request.POST.get('cat')
+        year = request.POST.get('year')
+        # if not year:
+        #     year = 2020
+
+        if year and int(priod) > 0 :
+            queryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
+            total_receipt=Sum('receipt_amount')).filter(customer_id__customer_cat__id =cat,priod=priod,syear=year)
+        elif not year and int(priod) > 0:
+            queryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
+            total_receipt=Sum('receipt_amount')).filter(customer_id__customer_cat__id =cat,priod=priod)
+        else:
+            queryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
+            total_receipt=Sum('receipt_amount')).filter(customer_id__customer_cat__id =cat)
+
+        for entry in queryset:
+            customer = Customer.objects.get(id=entry['customer'])
+            labels.append(customer.customer_name)
+            data.append(float(entry['total_receipt']))
+        context = {
+        'customer_cat':customer_cat,
+        'data':data,
+        'labels':labels,
+        'year':year,
+        'priod':int(priod),
+        'cat_set':int(cat),
+         }  
+
+        return render(request,'accountdash/receipt_report.html',context)
+    return render(request,'accountdash/receipt_report.html',{'customer_cat':customer_cat})
+
+def total_inv_rec_report(request):
+    ilabels = []
+    idata = []
+    rlabel = []
+    rdata = []
+    customer_cat = CustomerCatogry.objects.all()
+
+    if request.method == 'POST':
+        priod = request.POST.get('priod')
+        cat= request.POST.get('cat')
+        year = request.POST.get('year')
+
+        iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+                total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat)
+        for i in iqueryset:
+            ilabels.append(i['customer_name'])
+            rqueryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
+                total_receipt=Sum('receipt_amount')).filter(customer_id__customer_name=i['customer_name'])
+            for j in rqueryset:
+                if (j['total_receipt']):
+                    rdata.append(float(j['total_receipt']))
+                else:
+                    rdata.append(float(0))
+            print(rqueryset,i['customer_name'])    
+            idata.append(float(i['total_sales']))
+        context = {
+                'ilabels':ilabels,
+                'idata':idata,
+                'rlabel':rlabel,
+                'rdata':rdata,
+                'customer_cat':customer_cat
+            }
+        return render(request,'accountdash/total_invoice_receipt_report.html',context)
+        
+    return render(request,'accountdash/total_invoice_receipt_report.html',{'customer_cat':customer_cat})
+
 def mylogin(request):
     if request.method == 'POST':
         username = request.POST.get('username')

@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+      <div class="col">
+        <div class="card card-primary">
+          <div class="card-header">
+            <div class="d-flex justify-content-center">
+              <a href="javascript:void(0);"></a>
+              <h3 class="card-title1 ">تقرير الإيرادات والمبالغ التي تم تحصيلها</h3>
+            </div>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+              <form action="{% url 'total_inv_rec_report' %}" method="post">
+                {% csrf_token %}
+                <div class="row justify-content-start text-right">
+                  <div class="col-md-6 ">
+                    <div class="form-group">
+                      <label >تصنيف الزبائن</label>
+                      <select class="form-control"  name="cat">
+                        
+                        {% for cat in customer_cat %}
+                        <option value="{{cat.pk}}"
+                        {% if cat.pk == cat_set %}
+                        selected 
+                        {% endif %}
+                          >{{cat.type_desc}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3 ">
+                    <div class="form-group">
+                      <label for="year">السنة</label>
+                      <input type="number" class="form-control text-right   bg-white" id="year"
+                        name="year" placeholder="السنة" 
+                        {% if year %}
+                        value = "{{year}}"
+                          
+                        {% endif %}
+                          >
+                            </div>
+                  </div>                
+
+                  <div class="col-md-3 ">
+                    <div class="form-group">
+                      <label>الفترة</label>
+                      <select class="form-control" name='priod'>
+                        <option value="0"{% if priod == 0 %} selected {% endif %}>عرض الكل</option>
+                        <option value="1"{% if priod == 1 %} selected {% endif %}>الربع الأول</option>
+                        <option value="2"{% if priod == 2 %} selected {% endif %}>الربع الثاني</option>
+                        <option value="3"{% if priod == 3 %} selected {% endif %}>الربع الثالث</option>
+                        <option value="4"{% if priod == 4 %} selected {% endif %}>الربع الرابع</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
+            </form>
+
+            <div class="chart">
+              <canvas id="invoice-chart" height="500"></canvas>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+
+    </div>
+
+    <!-- /.row (main row) -->
+  </div><!-- /.container-fluid -->
+</section>
+
+<script>
+function poolColors(a) {
+  var pool = [];
+  for(i = 0; i < a; i++) {
+      pool.push(getRandomColor());
+  }
+  return pool;
+}
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+var config = {
+
+    type: 'bar',
+    data: {
+      labels: {{ ilabels|safe }},
+      datasets: [
+        {
+          label: "المبيعات",
+          backgroundColor: '#1E90FF',
+          data: {{ idata|safe }}
+        }, {
+          label: "المبالغ المحصلة",
+          backgroundColor: '#228B22',
+          data: {{ rdata|safe }}
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'الايرادات والمبالغ المحصلة '
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    }
+  };
+
+
+  window.onload = function () {
+    var ctx = document.getElementById('invoice-chart').getContext('2d');
+    window.myPie = new Chart(ctx, config);
+  };
+
+
+</script>
+
+{% endblock content %}
