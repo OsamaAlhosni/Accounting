@@ -120,13 +120,38 @@ def ticket_list(request):
 @login_required(login_url='/mylogin')
 
 def sales_report(request):
-    
+    # Invoice Chart label & data
+    labels = []
+    data = []
+
     customer_cat = CustomerCatogry.objects.all()
 
     if request.method == 'POST':
         priod = request.POST.get('priod')
         cat= request.POST.get('cat')
-        print(priod,cat)
+        year = request.POST.get('year')
+        if not year:
+            year = 2020
+        if year and int(priod) > 0 :
+            queryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+            total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat,tyear=year,proid=priod) 
+        else:               
+            queryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+            total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat)
+
+        for entry in queryset:
+            labels.append(entry['customer_name'])
+            data.append(float(entry['total_sales']))
+        context = {
+        'customer_cat':customer_cat,
+        'data':data,
+        'labels':labels,
+        'year':year,
+        'priod':int(priod),
+        'cat_set':int(cat),
+         }  
+        print(year) 
+        return render(request,'accountdash/sales_report.html',context)
     return render(request,'accountdash/sales_report.html',{'customer_cat':customer_cat})
 
 def mylogin(request):
