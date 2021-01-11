@@ -125,6 +125,18 @@ hoverBorderColor: "#000",
       text: "إجمالي المبيعات ",
       fontFamily: "Lato",
     },
+    tooltips: {
+      callbacks: {
+            label: function(tooltipItem, data) {
+                var value = data.datasets[0].data[tooltipItem.index];
+                if(parseInt(value) >= 1000){
+                           return 'د.ل' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                           return 'د.ل' + value;
+                        }
+            }
+      } // end callbacks:
+    }, //end tooltips      
     responsive: true,
     maintainAspectRatio: false,
   }
