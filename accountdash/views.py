@@ -30,8 +30,9 @@ def index(request):
         total_payment_data = []
         
         # All customer count
-        all_customer = Invoice.objects.values_list(
-            'customer_name').order_by('customer_name').distinct().count()
+        # all_customer = Invoice.objects.values_list(
+        #     'customer_name').order_by('customer_name').distinct().count()
+        all_customer = Customer.objects.count()
 
         # Total All Receipts
         all_receipt_amount = Receipt.objects.aggregate(
@@ -67,27 +68,26 @@ def index(request):
 
         # Total Invoices By Customer Catagory
         queryset = Invoice.objects.values('customer_id__customer_cat__type_desc').annotate(
-            total_sales=Sum('invoice_amount')).order_by('-total_sales')[:5]
+            total_sales=Sum('invoice_amount')).order_by('-total_sales')
         for entry in queryset:
             cat_label.append(entry['customer_id__customer_cat__type_desc'])
             cat_data.append(float(entry['total_sales']))
 
         # Total Sales & Receipts
 
-        invoices = Invoice.objects.all()[:5]
-        for invoice in invoices:
-            i_total = Invoice.objects.annotate(total_sales=Sum('invoice_amount')).filter(customer_id_id =invoice.customer_id_id)
-            r_total = Receipt.objects.annotate( total_receipt=Sum('receipt_amount')).filter(customer_id = invoice.customer_id_id)
-            if r_total :
-                for j in r_total:
-                    total_payment_data.append(float(j.total_receipt))
-            else:
-                total_payment_label.append(float(0))
-                
-            for i in i_total:
-                total_invoice_label.append(i.customer_name)
-                total_invoice_date.append(float(i.total_sales))
-
+        iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+                total_sales=Sum('invoice_amount'))[:10]
+        for i in iqueryset:
+            total_invoice_label.append(i['customer_name'])
+            rqueryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
+                total_receipt=Sum('receipt_amount')).filter(customer_id__customer_name=i['customer_name'])
+            for j in rqueryset:
+                if (j['total_receipt']):
+                    total_payment_data.append(float(j['total_receipt']))
+                else:
+                    total_payment_data.append(float(0))
+            print(rqueryset,i['customer_name'])    
+            total_invoice_date.append(float(i['total_sales']))
         context = {
             'all_customer': all_customer,
             'all_invoice_amount': all_invoice_amount,
@@ -123,7 +123,7 @@ def sales_report(request):
     # Invoice Chart label & data
     labels = []
     data = []
-
+    total_sales =0
     customer_cat = CustomerCatogry.objects.all()
 
     if request.method == 'POST':
@@ -142,6 +142,8 @@ def sales_report(request):
         for entry in queryset:
             labels.append(entry['customer_name'])
             data.append(float(entry['total_sales']))
+            total_sales += float(entry['total_sales'])
+        total_sales = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
         context = {
         'customer_cat':customer_cat,
         'data':data,
@@ -149,6 +151,7 @@ def sales_report(request):
         'year':year,
         'priod':int(priod),
         'cat_set':int(cat),
+        'total_sales':total_sales,
          }  
         print(year) 
         return render(request,'accountdash/sales_report.html',context)
@@ -159,15 +162,13 @@ def receipt_report(request):
     # Receipts Detail Chart label & data
     labels = []
     data = []
+    total_receipt = 0
     customer_cat = CustomerCatogry.objects.all()
 
     if request.method == 'POST':
         priod = request.POST.get('priod')
         cat= request.POST.get('cat')
         year = request.POST.get('year')
-        # if not year:
-        #     year = 2020
-
         if year and int(priod) > 0 :
             queryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
             total_receipt=Sum('receipt_amount')).filter(customer_id__customer_cat__id =cat,priod=priod,syear=year)
@@ -182,6 +183,8 @@ def receipt_report(request):
             customer = Customer.objects.get(id=entry['customer'])
             labels.append(customer.customer_name)
             data.append(float(entry['total_receipt']))
+            total_receipt += float(entry['total_receipt'])
+        total_receipt = f"{intcomma('{:0.3f}'.format(total_receipt))} د.ل "
         context = {
         'customer_cat':customer_cat,
         'data':data,
@@ -189,6 +192,7 @@ def receipt_report(request):
         'year':year,
         'priod':int(priod),
         'cat_set':int(cat),
+        'total_receipt':total_receipt,
          }  
 
         return render(request,'accountdash/receipt_report.html',context)
@@ -199,15 +203,24 @@ def total_inv_rec_report(request):
     idata = []
     rlabel = []
     rdata = []
+    total_receipt = 0
+    total_sales = 0
     customer_cat = CustomerCatogry.objects.all()
-
     if request.method == 'POST':
         priod = request.POST.get('priod')
         cat= request.POST.get('cat')
         year = request.POST.get('year')
 
-        iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+        if year and int(priod) > 0 :
+            iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+                total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat,proid=priod,syear=year)
+        elif not year and int(priod) > 0:  
+            iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+                total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat,proid=priod)
+        else:
+            iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
                 total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat)
+
         for i in iqueryset:
             ilabels.append(i['customer_name'])
             rqueryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
@@ -215,16 +228,24 @@ def total_inv_rec_report(request):
             for j in rqueryset:
                 if (j['total_receipt']):
                     rdata.append(float(j['total_receipt']))
+                    total_receipt += float(j['total_receipt'])
                 else:
                     rdata.append(float(0))
-            print(rqueryset,i['customer_name'])    
             idata.append(float(i['total_sales']))
+            total_sales += float(i['total_sales'])
+        total_receipt = f"{intcomma('{:0.3f}'.format(total_receipt))} د.ل "
+        total_sales = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
         context = {
                 'ilabels':ilabels,
                 'idata':idata,
                 'rlabel':rlabel,
                 'rdata':rdata,
-                'customer_cat':customer_cat
+                'customer_cat':customer_cat,
+                'year':year,
+                'priod':int(priod),
+                'cat_set':int(cat),   
+                'total_sales': total_sales,
+                'total_receipt': total_receipt,             
             }
         return render(request,'accountdash/total_invoice_receipt_report.html',context)
         

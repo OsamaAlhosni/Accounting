@@ -19,7 +19,7 @@ class Invoice(models.Model):
     imported_date = models.DateTimeField(
         auto_now=True, blank=True, null=True)
 
-    def __str__(self):
-        return self.customer_name
-        # , self.Invoice_no, self.proid, self.invoice_amount
+    # def __str__(self):
+    #     return self.customer_name
+    #     # , self.Invoice_no, self.proid, self.invoice_amount
 

@@ -52,7 +52,9 @@ def upload_invoice(request):
             
             try:
                 find_customer = Customer.objects.get(pk=customer_id)
-            except Customer.DoesNotExist:
+            # except Customer.DoesNotExist:
+            except Exception as e:
+                print(type(e),customer_id)
                 find_customer =  Customer.objects.get(pk=1)
             try:
                 Invoice.objects.create(

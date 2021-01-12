@@ -73,7 +73,15 @@
                 </div>
                 <button type="submit" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
             </form>
-
+            
+            {% if total_receipt %}
+              <br>
+              <hr>
+              <h4 class="text-right text-success">إجمالي المبالغ المحصلة : {{total_receipt}}</h4>
+              <hr>
+              <br>
+            {% endif %}
+              
             <div class="chart">
               <canvas id="invoice-chart" height="500"></canvas>
             </div>
