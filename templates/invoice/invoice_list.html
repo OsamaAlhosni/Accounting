@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% load humanize %} 
+{% extends 'base.html' %} {% load static %} {% load humanize %}
 {% block content %}
 
 <div class="content-wrapper">
@@ -10,35 +10,51 @@
             <h3 class="card-title">قائمة الفواتير</h3>
           </div>
           <div class="card-body">
-            <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-              <div class="row">
-                <div class="col-sm-12 col-md-6"></div>
-                <div class="col-md-6 text-right">
-                  <h4>بحث</h4>
-                  <label>إسم الجهة</label>
-                  <select  class="form-control select2 text-right" style="width: 100%" id="customer_name" name="customer_name">
-                    <option value="">
-                    
-                    </option>
-                  </select>
+            <form action="" method="get">
+              <div class="row text-right">
+                <div class="col-2  ">
+                  <label>السنة</label>
+                  <input type="text" class="form-control text-right" placeholder="أدخل السنة" id="year" name="year">
+                </div>
+                <div class="col-2 ">
                   <label>الفترة</label>
-                  <select  class="form-control select2 text-right" style="width: 100%" id="priod" name="priod">
+                  <select class="form-control select2 text-right" style="width: 100%" id="priod" name="priod">
                     <option value="0">الكل </option>
                     <option value="1">الفترة الأولى </option>
                     <option value="2">الفترة الثانية </option>
                     <option value="3">الفترة الثالثة </option>
                     <option value="4">الفترة الرابعة </option>
                   </select>
-                  <br />
+                </div>
+                <div class="col-md-5 ">
+                  <label>إسم الجهة</label>
+                  <select class="form-control select2 text-right" style="width: 100%" id="customer_name"
+                    name="customer_name">
+                    <option value="">
+
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-3  ">
+                  <label>رقم الفاتورة</label>
+                  <input type="text" class="form-control text-right" placeholder="أدخل رقم الفاتورة" id="invoice_no"
+                    name="invoice_no">
+                </div>
+
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-6 offset-md-6">
+                  <button type="submit" class="btn bg-gradient-primary btn-lg">بحث</button>
                 </div>
               </div>
+            </form>
+
+            <hr>
+            <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
               <div class="row">
                 <div class="col-sm-12">
-                  <table
-                    class="table table-bordered table-hover dataTable dtr-inline"
-                    role="grid"
-                    aria-describedby="example2_info"
-                  >
+                  <table class="table table-bordered table-hover dataTable dtr-inline" role="grid"
+                    aria-describedby="example2_info">
                     <thead>
                       <tr role="row">
                         <th></th>
@@ -57,17 +73,11 @@
                     <tbody>
                       <tr>
                         <td class="project-actions text-right">
-                          <a
-                            class="btn btn-danger btn-sm"
-                            href="{% url 'delete_invoice' invoice.id %}"
-                          >
+                          <a class="btn btn-danger btn-sm" href="{% url 'delete_invoice' invoice.id %}">
                             <i class="fas fa-trash"> </i>
                             حذف
                           </a>
-                          <a
-                            class="btn btn-info btn-sm"
-                            href="{% url 'edit_invoice' invoice.id %}"
-                          >
+                          <a class="btn btn-info btn-sm" href="{% url 'edit_invoice' invoice.id %}">
                             <i class="fas fa-pencil-alt"> </i>
                             تعديل
                           </a>
@@ -110,18 +120,10 @@
               </div>
               <div class="row">
                 <div class="col-sm-12 col-md-5">
-                  <div
-                    class="dataTables_info"
-                    id="example2_info"
-                    role="status"
-                    aria-live="polite"
-                  ></div>
+                  <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
                 </div>
                 <div class="col-sm-12 col-md-7">
-                  <div
-                    class="dataTables_paginate paging_simple_numbers"
-                    id="example2_paginate"
-                  >
+                  <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
                     {% if page_obj.has_other_pages %}
                     <ul class="pagination">
                       {% if page_obj.has_previous %}
@@ -129,39 +131,25 @@
                         <a class="page-link" href="?page=1">«</a>
                       </li>
                       <li class="paginate_button page-item">
-                        <a
-                          class="page-link"
-                          href="?page={{ page_obj.previous_page_number }}"
-                          >السابق</a
-                        >
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">السابق</a>
                       </li>
                       {% endif %} {% for i in page_obj.paginator.page_range %}
                       {% if page_obj.number == i %}
                       <li class="paginate_button page-item active">
                         <a class="page-link" href="?page={{i}}">{{i}}</a>
                       </li>
-                      {% elif i > page_obj.number|add:'-3' and i <
-                      page_obj.number|add:'3' %}
-
-                      <li class="paginate_button page-item">
+                      {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %} <li
+                        class="paginate_button page-item">
                         <a class="page-link" href="?page={{i}}">{{i}}</a>
-                      </li>
-                      {% endif %} {% endfor %} {% if page_obj.has_next %}
-                      <li class="paginate_button page-item">
-                        <a
-                          class="page-link"
-                          href="?page={{ page_obj.next_page_number }}"
-                          >التالي</a
-                        >
-                      </li>
-                      <li class="paginate_button page-item">
-                        <a
-                          class="page-link"
-                          href="?page={{ page_obj.paginator.num_pages }}"
-                          >»</a
-                        >
-                      </li>
-                      {% endif %}
+                        </li>
+                        {% endif %} {% endfor %} {% if page_obj.has_next %}
+                        <li class="paginate_button page-item">
+                          <a class="page-link" href="?page={{ page_obj.next_page_number }}">التالي</a>
+                        </li>
+                        <li class="paginate_button page-item">
+                          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">»</a>
+                        </li>
+                        {% endif %}
                     </ul>
                     {% endif %}
                   </div>
