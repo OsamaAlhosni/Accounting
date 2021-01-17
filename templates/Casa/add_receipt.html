@@ -1,6 +1,4 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
 <body>
   <div class="content-wrapper">
@@ -22,7 +20,7 @@
                   <label for="receipt_date">التاريخ</label>
                   <input
                     type="date"
-                    class="form-control text-right shadow p-4 mb-4 bg-white"
+                    class="form-control text-right shadow mb-4 bg-white"
                     name="receipt_date"
                     id="receipt_date"
                   />
@@ -32,7 +30,7 @@
                   <label for="receipt_no">رقم الإيصال</label>
                   <input
                     type="text"
-                    class="form-control text-right shadow p-4 mb-4 bg-white"
+                    class="form-control text-right shadow mb-4 bg-white"
                     id="receipt_no"
                     name="receipt_no"
                     placeholder="أدخل رقم الإيصال"
@@ -44,18 +42,17 @@
                   <label for="receipt_year">السنة</label>
                   <input
                     type="number"
-                    class="form-control text-right shadow p-4 mb-4 bg-white"
+                    class="form-control text-right shadow mb-4 bg-white"
                     id="receipt_year"
                     name="receipt_year"
                     placeholder="السنة"
                   />
                 </div>
-
                 <div class="col-md-6">
                   <label for="receipt_priod">الفترة</label>
                   <input
                     type="number"
-                    class="form-control text-right shadow p-4 mb-4 bg-white"
+                    class="form-control text-right shadow mb-4 bg-white"
                     id="receipt_priod"
                     name="receipt_amount"
                     placeholder="الفترة"
@@ -65,15 +62,97 @@
               <label for="receipt_priod">القيمة</label>
               <input
                 type="number"
-                class="form-control text-right shadow p-4 mb-4 bg-white"
+                class="form-control text-right shadow mb-4 bg-white"
                 id="receipt_amount"
                 name="receipt_amount"
                 placeholder="قيمة الإيصال"
                 step="0.001"
               />
+              <div class="row">
+                <div class="col-md-6">
+                  {% for payment_type in payment_types %}
+                  <div class="form-check form-check-inline shadow">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="payment_type"
+                      id="payment_type"
+                      value="{{payment_type.id}}"
+                    />
+                    <label class="form-check-label" for="receipt_type.id"
+                      >{{payment_type.payment_type}}</label
+                    >
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="col-md-6">
+                  {% for receipt_type in receipt_types %}
+                  <div class="form-check form-check-inline shadow">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="receipt_type"
+                      id="receipt_type"
+                      value="{{receipt_type.id}}"
+                    />
+                    <label class="form-check-label" for="receipt_type"
+                      >{{receipt_type.type_desc}}</label
+                    >
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <br />
+              <hr />
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="transfare_date">التاريخ</label>
+                  <input
+                    type="date"
+                    class="form-control text-right shadow mb-4 bg-white"
+                    name="transfare_date"
+                    id="transfare_date"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="check_no">رقم الرسالة / الإشعار</label>
+                  <input
+                    type="text"
+                    class="form-control text-right shadow mb-4 bg-white"
+                    id="transfare_no"
+                    name="transfare_no"
+                    placeholder="رقم الرسالة / الإشعار"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="check_no">رقم الصك</label>
+                  <input
+                    type="text"
+                    class="form-control text-right shadow mb-4 bg-white"
+                    id="check_no"
+                    name="check_no"
+                    placeholder="رقم الصك"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="bank_name">إسم المصرف</label>
+                  <select
+                    class="form-control select2 text-right mb-4 shadow"
+                    style="width: 100%"
+                    id="bank_name"
+                    name="bank_name"
+                  >
+                    {% for bank in banks %}
+                    <option value="{{bank.pk}}">{{bank.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
               <label>إسم الجهة</label>
               <select
-                class="form-control select2 text-right"
+                class="form-control select2 text-right mb-4"
                 style="width: 100%"
                 id="customer_name"
                 name="customer_name"
