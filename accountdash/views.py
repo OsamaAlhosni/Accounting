@@ -130,19 +130,24 @@ def sales_report(request):
         priod = request.POST.get('priod')
         cat= request.POST.get('cat')
         year = request.POST.get('year')
-        if not year:
-            year = 2020
-        if year and int(priod) > 0 :
-            queryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+        # if not year:
+        #     year = 2020
+        if year :
+            queryset = Invoice.objects.values('customer_name').annotate(
+            total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat,tyear=year) 
+
+        elif  year and int(priod) > 0 :
+            queryset = Invoice.objects.values('customer_name').annotate(
             total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat,tyear=year,proid=priod) 
         else:               
-            queryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
+            queryset = Invoice.objects.values('customer_name').annotate(
             total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id =cat)
 
         for entry in queryset:
             labels.append(entry['customer_name'])
             data.append(float(entry['total_sales']))
             total_sales += float(entry['total_sales'])
+            print(entry['customer_name'])
         total_sales = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
         context = {
         'customer_cat':customer_cat,
