@@ -43,7 +43,7 @@ def add_receipt(request):
         receipt = Receipt(receipt_no=receipt_no, receipt_date=receipt_date,
                           receipt_amount=receipt_amount, receipt_notes=receipt_notes, customer_id=customer_id, priod=receipt_priod,
                           syear=receipt_year, check_no=check_no, invoice_no=invoice_no, bank_id=bank_id, receipt_type_id=receipt_type_id,
-                          payment_type_id=payment_type_id, transfare_date=transfare_date, transfare_no=transfare_no)
+                          payment_type_id=payment_type_id,  transfare_no=transfare_no)
         receipt.save()
         print(bank_id)
     context = {
@@ -116,7 +116,8 @@ def edit_receipt(request, receipt_id):
         receipt.bank_id = bank_id
         receipt.receipt_type_id = receipt_type_id
         receipt.payment_type_id = payment_type_id
-        receipt.transfare_date = transfare_date
+        # if  transfare_date :
+        #     receipt.transfare_date = transfare_date
         receipt.transfare_no = transfare_no
 
         receipt.save()

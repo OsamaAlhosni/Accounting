@@ -30,8 +30,6 @@ def index(request):
         total_payment_data = []
         
         # All customer count
-        # all_customer = Invoice.objects.values_list(
-        #     'customer_name').order_by('customer_name').distinct().count()
         all_customer = Customer.objects.count()
 
         # Total All Receipts
@@ -56,9 +54,7 @@ def index(request):
             .annotate(total_sales=Sum('invoice_amount')) \
             .order_by('-total_sales')[:5]
 
-        # queryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
-        #     total_sales=Sum('invoice_amount')).order_by('-total_sales')[:5]
-
+        
         for entry in queryset:
             customer = Customer.objects.get(id=entry['customer_id_id'])
             labels.append(customer.customer_name)
@@ -80,7 +76,6 @@ def index(request):
             cat_data.append(float(entry['total_sales']))
 
         # Total Sales & Receipts
-
         iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
                 total_sales=Sum('invoice_amount'))[:10]
         for i in iqueryset:
@@ -240,8 +235,10 @@ def total_inv_rec_report(request):
                     rdata.append(float(0))
             idata.append(float(i['total_sales']))
             total_sales += float(i['total_sales'])
+        balance = total_sales - total_receipt    
         total_receipt = f"{intcomma('{:0.3f}'.format(total_receipt))} د.ل "
         total_sales = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
+        balance = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
         context = {
                 'ilabels':ilabels,
                 'idata':idata,
@@ -253,6 +250,7 @@ def total_inv_rec_report(request):
                 'cat_set':int(cat),   
                 'total_sales': total_sales,
                 'total_receipt': total_receipt,             
+                'balance': balance,
             }
         return render(request,'accountdash/total_invoice_receipt_report.html',context)
         

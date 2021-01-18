@@ -17,7 +17,7 @@ class ReceiptType(models.Model):
     def __str__(self):
         return self.type_desc
 class Receipt(models.Model):
-    receipt_no = models.IntegerField()
+    receipt_no = models.CharField(max_length=150,null=True,blank=True)
     receipt_date = models.DateTimeField(blank=False, null=False)
     receipt_amount = models.DecimalField(
         max_digits=19, decimal_places=3, blank=False, null=False)
@@ -32,6 +32,6 @@ class Receipt(models.Model):
     bank = models.ForeignKey(Bank,on_delete=models.CASCADE,null=True,blank=True)
     transfare_no = models.CharField(max_length= 150,blank=True,null=True)
     payment_type = models.ForeignKey(PaymentType,on_delete=models.CASCADE,null=True,blank=True)
-    transfare_date = models.DateField(null=True,blank=True)
+    transfare_date = models.DateTimeField(null=True,blank=True)
 
    
