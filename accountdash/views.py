@@ -126,10 +126,11 @@ def sales_report(request):
     data = []
     total_sales =0
     customer_cat = CustomerCatogry.objects.all()
-
+    
     if request.method == 'POST':
         priod = request.POST.get('priod')
         cat= request.POST.get('cat')
+        customer_list = Customer.objects.filter(customer_cat_id=cat)
         year = request.POST.get('year')
         if  year and int(priod) > 0 :
             queryset=Invoice.objects.select_related('account_customer').all() \
@@ -155,6 +156,7 @@ def sales_report(request):
         'priod':int(priod),
         'cat_set':int(cat),
         'total_sales':total_sales,
+        'customer_list':customer_list,
          }  
         return render(request,'accountdash/sales_report.html',context)
     return render(request,'accountdash/sales_report.html',{'customer_cat':customer_cat})
@@ -238,7 +240,7 @@ def total_inv_rec_report(request):
         balance = total_sales - total_receipt    
         total_receipt = f"{intcomma('{:0.3f}'.format(total_receipt))} د.ل "
         total_sales = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
-        balance = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
+        balance = f"{intcomma('{:0.3f}'.format(balance))} د.ل "
         context = {
                 'ilabels':ilabels,
                 'idata':idata,

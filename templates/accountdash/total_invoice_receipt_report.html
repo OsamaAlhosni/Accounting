@@ -76,8 +76,9 @@
             {% if total_sales %}
               <br>
               <hr>
-              <h4 class="text-right text-danger">إجمالي المبيعات  : {{total_sales}}</h4><br>
-              <h4 class="text-right text-success">إجمالي المبالغ المحصلة : {{total_receipt}}</h4>
+              <h4 class="text-right text-primary">إجمالي المبيعات  : {{total_sales}}</h4>
+              <h4 class="text-right text-success">إجمالي المبالغ المحصلة : {{total_receipt}}</h4><hr>
+              <h4 class="text-right text-danger">إجمالي المبالغ المستحقة : {{balance}}</h4>
               <hr>
               <br>
             {% endif %}
