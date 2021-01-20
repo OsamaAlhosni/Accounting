@@ -9,6 +9,7 @@ urlpatterns = [
     path('ticket_list', views.ticket_list, name='ticket_list'),
     path('sales_report', views.sales_report, name='sales_report'),
     path('receipt_report', views.receipt_report, name='receipt_report'),    
+    path('customer_invoice/<int:customer_id>', views.customer_invoice, name='customer_invoice'),        
     path('total_inv_rec_report', views.total_inv_rec_report, name='total_inv_rec_report'),        
     path('mylogout', views.mylogout, name='mylogout'),
     path('mylogin', views.mylogin, name='mylogin'),

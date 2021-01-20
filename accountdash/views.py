@@ -301,3 +301,7 @@ def change_password(request):
                     err = 'كلمة المرور القديمة غير صحيحة.. يرجى إعادة الإدخال'
                     return render(request,'accountdash/change_password.html',{'err':err})            
     return render(request,'accountdash/change_password.html')
+
+def customer_invoice(request,customer_id):
+    print(customer_id)
+    return render(request,'accountdash/customer_invoice.html')

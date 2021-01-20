@@ -71,71 +71,22 @@
                     </div>
                   </div>
                 </div>
-                <div class="row justify-content-start1 text-right">
-                  <div class="card card-default">
-                    <!-- <div class="card-header">
-                      <h3 class="card-title">Bootstrap Duallistbox</h3>
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                          <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                          <i class="fas fa-times"></i>
-                        </button>
-                      </div>
-                    </div> -->
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="form-group">
-                            <label>Multiple</label>
-                              <select class="duallistbox" multiple="multiple" style="display: none;">
-                              <option selected="" data-sortindex="7">Alabama</option>
-                              <option data-sortindex="8">Alaska</option>
-                              <option data-sortindex="9">California</option>
-                              <option>Delaware</option>
-                              <option>Tennessee</option>
-                              <option>Texas</option>
-                              <option>Washington</option>
-                            </select>
-                          </div>
-                          <!-- /.form-group -->
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                      Visit <a href="https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox#readme">Bootstrap Duallistbox</a> for more examples and information about
-                      the plugin.
-                    </div>
-                  </div>                  
-                  <!-- <div class="col-md-9 ">
-                    <div class="form-group">
-                      <label >إسم الزبون</label>
-                      <select class="form-control"  name="cat">
-                        
-                        {% for customer in customer_list %}
-                        <option value="{{customer.pk}}"
-                        {% if cat.pk == cat_set %}
-                        selected 
-                        {% endif %}
-                          >{{customer.customer_name}}</option>
-                        {% endfor %}
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    
-                    <div class="form-group">
-                      <a class="btn btn-outline-info" href="#">كشف حساب</a>
-
-                    </div>
-                  </div> -->
                 </div>
                 <button type="submit" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
+                <hr>
+                <div class="row">
+                  <div class="col-md-6 offset-6  text-right">
+                    <label for="bank_name">تفاصيل فواتير لزبون محدد</label>
+                    <select class="form-control select2 text-right mb-4 shadow" style="width: 100%" id="bank_name"
+                      name="bank_name">
+                      {% for customer in customer_list %}
+                      <option value="{{customer.pk}}">{{customer.customer_name}}</option>
+                      {% endfor %}
+                    </select>
+                    <hr>
+                    <a href="{% url 'customer_invoice' 3 %}" class="btn btn-block1 btn-outline-success btn-lg float-left">عرض</a>
+                  </div>                    
+                </div>
             </form>
             {% if total_sales %}
               <br>
@@ -213,12 +164,13 @@ hoverBorderColor: "#000",
   }
     };
 
-
+    
+  
   window.onload = function () {
     var ctx = document.getElementById('invoice-chart').getContext('2d');
     window.myPie = new Chart(ctx, config);
+  
   };
-
 
 </script>
 
