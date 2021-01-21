@@ -5,7 +5,6 @@
 {% block content %}
 
 
-
 <section class="content">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
@@ -75,16 +74,20 @@
                 <button type="submit" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
                 <hr>
                 <div class="row">
-                  <div class="col-md-6 offset-6  text-right">
-                    <label for="bank_name">تفاصيل فواتير لزبون محدد</label>
-                    <select class="form-control select2 text-right mb-4 shadow" style="width: 100%" id="bank_name"
-                      name="bank_name">
+                  <div class="col-md-12  text-right">
+                    <!-- <label for="bank_name">تفاصيل فواتير لزبون محدد</label> -->
+                    <!-- <select class="form-control select2 text-right mb-4 shadow" style="width: 100%" id="customer_list"
+                      name="customer_list">
                       {% for customer in customer_list %}
-                      <option value="{{customer.pk}}">{{customer.customer_name}}</option>
+                      <option value="{{customer.pk}}">                     
+                          {{customer.customer_name}}</option>
                       {% endfor %}
-                    </select>
-                    <hr>
-                    <a href="{% url 'customer_invoice' 3 %}" class="btn btn-block1 btn-outline-success btn-lg float-left">عرض</a>
+                    </select> -->
+                    {% for customer in customer_list %}
+                    <a href="{% url 'customer_invoice' customer.pk priod %}" class="btn btn-block1 btn-outline-success btn-sm mt-1" id="customer_invoices">{{customer.customer_name}}</a>  
+                    {% endfor %}
+                    
+                    <!-- <a href="#" class="btn btn-block btn-outline-success btn-lg float-left" id="customer_invoices">عرض</a>   -->
                   </div>                    
                 </div>
             </form>

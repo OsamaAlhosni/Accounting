@@ -302,6 +302,14 @@ def change_password(request):
                     return render(request,'accountdash/change_password.html',{'err':err})            
     return render(request,'accountdash/change_password.html')
 
-def customer_invoice(request,customer_id):
-    print(customer_id)
-    return render(request,'accountdash/customer_invoice.html')
+def customer_invoice(request,customer_id,priod):
+    if priod == 0 :
+        customer_invoices = Invoice.objects.filter(invoice_amount__gt=0,customer_id_id=customer_id)
+    else:    
+        customer_invoices = Invoice.objects.filter(invoice_amount__gt=0,customer_id_id=customer_id,proid=priod)
+    context = {
+        'customer_id':customer_id,
+        'customer_invoices':customer_invoices
+    }
+    # print(cust_id)
+    return render(request,'accountdash/customer_invoice.html',context)
