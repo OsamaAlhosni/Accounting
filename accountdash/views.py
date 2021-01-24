@@ -124,6 +124,8 @@ def sales_report(request):
     # Invoice Chart label & data
     labels = []
     data = []
+    prepare = []
+    percent=[]
     total_sales =0
     customer_cat = CustomerCatogry.objects.all()
     
@@ -147,7 +149,16 @@ def sales_report(request):
             labels.append(cust.customer_name)
             data.append(float(entry['total_sales']))
             total_sales += float(entry['total_sales'])
+            prepare.append({'customer_id':cust.pk, 'customer_name':cust.customer_name,'total_sales':float(entry['total_sales'])})
+        percet_sales = total_sales
+        for i in prepare:
+            net_percent = round((i['total_sales']/percet_sales )*100,2)
+            s = f"{intcomma('{:0.3f}'.format(i['total_sales']))} د.ل "
+            percent.append({'customer_id':i['customer_id'], 'customer_name':i['customer_name'],'net_percent':net_percent,'total_sales':s})
+            
+            print(net_percent)         
         total_sales = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
+        print(percent)
         context = {
         'customer_cat':customer_cat,
         'data':data,
@@ -157,6 +168,8 @@ def sales_report(request):
         'cat_set':int(cat),
         'total_sales':total_sales,
         'customer_list':customer_list,
+        'percet_sales':percet_sales,
+        'percent':percent
          }  
         return render(request,'accountdash/sales_report.html',context)
     return render(request,'accountdash/sales_report.html',{'customer_cat':customer_cat})
@@ -307,8 +320,9 @@ def customer_invoice(request,customer_id,priod):
         customer_invoices = Invoice.objects.filter(invoice_amount__gt=0,customer_id_id=customer_id)
     else:    
         customer_invoices = Invoice.objects.filter(invoice_amount__gt=0,customer_id_id=customer_id,proid=priod)
+    cust= Customer.objects.get(id =customer_id)                    
     context = {
-        'customer_id':customer_id,
+        'cust':cust,
         'customer_invoices':customer_invoices
     }
     # print(cust_id)

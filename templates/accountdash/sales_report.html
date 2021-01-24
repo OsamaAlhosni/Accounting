@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+
 {% load static %}
 {% load humanize %}
 
 {% block content %}
 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <section class="content">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
@@ -74,22 +75,38 @@
                 <button type="submit" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
                 <hr>
                 <div class="row">
-                  <div class="col-md-12  text-right">
-                    <!-- <label for="bank_name">تفاصيل فواتير لزبون محدد</label> -->
-                    <!-- <select class="form-control select2 text-right mb-4 shadow" style="width: 100%" id="customer_list"
-                      name="customer_list">
-                      {% for customer in customer_list %}
-                      <option value="{{customer.pk}}">                     
-                          {{customer.customer_name}}</option>
-                      {% endfor %}
-                    </select> -->
-                    {% for customer in customer_list %}
-                    <a href="{% url 'customer_invoice' customer.pk priod %}" class="btn btn-block1 btn-outline-success btn-sm mt-1" id="customer_invoices">{{customer.customer_name}}</a>  
-                    {% endfor %}
-                    
-                    <!-- <a href="#" class="btn btn-block btn-outline-success btn-lg float-left" id="customer_invoices">عرض</a>   -->
-                  </div>                    
+                  <div class="col-12">
+                    <!-- /.card -->
+                    <div class="card-body table-responsive p-0 text-center" style="height: 300px;">
+                      <table class="table table-bordered table-head-fixed text-nowrap">
+                        <thead>
+                          <tr>
+                            <th style="width: 40px">النسبة المئوية</th>
+                            <th>نسبة المبيعات من إجمالي البيع</th>
+                            <th>قيمة المبيعات</th>
+                            <th>إسم لزبون</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for customer in percent %}
+                          <tr>
+                            <td><span id="percent" class="badge bg-danger"> {{customer.net_percent}}</span></td>
+                            <td>
+                              <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-danger" style="width: {{customer.net_percent}}%"></div>
+                              </div>
+                            </td>
+                            <td><a href="{% url 'customer_invoice' customer.customer_id priod %}"  id="customer_invoices">{{customer.total_sales}}</a>  </td>
+                            <td><a href="{% url 'customer_invoice' customer.customer_id priod %}"  id="customer_invoices">{{customer.customer_name}}</a>  </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
+              
             </form>
             {% if total_sales %}
               <br>

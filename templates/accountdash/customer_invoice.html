@@ -3,14 +3,14 @@
 {% load humanize %}
 
 {% block content %}
-<h1>Customer Invoices {{ customer_id }}</h1>
+
 <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Responsive Hover Table</h3>
+        <div class="card-header  ">
+          <h3 class="card-title1 text-center text-success">كشف فواتير  : {{ cust.customer_name }} </h3>
 
-          <div class="card-tools">
+          <!-- <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
               <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
@@ -20,49 +20,30 @@
                 </button>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive p-0 text-right">
           <table class="table table-hover text-nowrap">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>User</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Reason</th>
+                <th>السنة</th>
+                <th>الفترة</th>
+                <th>القيمة</th>
+                <th>رقم الفاتورة</th>
               </tr>
             </thead>
             <tbody>
+              
+              {% for i  in  customer_invoices %}
               <tr>
-                <td>183</td>
-                <td>John Doe</td>
-                <td>11-7-2014</td>
-                <td><span class="tag tag-success">Approved</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                <td><span class="tag tag-success">{{i.tyear}}</span></td>
+                <td>{{i.proid}}</td>
+                <td>{{i.invoice_amount|intcomma }}</td>
+                <td>{{i.Invoice_no|default_if_none:'لايوجد'}}</td>
               </tr>
-              <tr>
-                <td>219</td>
-                <td>Alexander Pierce</td>
-                <td>11-7-2014</td>
-                <td><span class="tag tag-warning">Pending</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-              </tr>
-              <tr>
-                <td>657</td>
-                <td>Bob Doe</td>
-                <td>11-7-2014</td>
-                <td><span class="tag tag-primary">Approved</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-              </tr>
-              <tr>
-                <td>175</td>
-                <td>Mike Doe</td>
-                <td>11-7-2014</td>
-                <td><span class="tag tag-danger">Denied</span></td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-              </tr>
+              {% endfor %}
+                
             </tbody>
           </table>
         </div>
@@ -72,10 +53,5 @@
     </div>
   </div>
 
-{% for customer_invoice in customer_invoices  %}
-
-<h4>{{customer_invoice.invoice_amount}}</h4>
-    
-{% endfor %}
     
 {% endblock %}
