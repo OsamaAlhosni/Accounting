@@ -76,18 +76,20 @@ def index(request):
             cat_data.append(float(entry['total_sales']))
 
         # Total Sales & Receipts
-        iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
-                total_sales=Sum('invoice_amount'))[:10]
+        iqueryset = Invoice.objects.values('customer_id_id').annotate(
+                total_sales=Sum('invoice_amount'))[:20]
+        customer = Customer.objects.get(id=iqueryset.customer_id_id)
+        print(iqueryset)
         for i in iqueryset:
-            total_invoice_label.append(i['customer_name'])
+            total_invoice_label.append(customer.customer_name)
             rqueryset = Receipt.objects.filter(receipt_amount__gt=0).values('customer').annotate(
-                total_receipt=Sum('receipt_amount')).filter(customer_id__customer_name=i['customer_name'])
+                total_receipt=Sum('receipt_amount')).filter(customer_id_id=i['customer_id_id'])
             for j in rqueryset:
                 if (j['total_receipt']):
                     total_payment_data.append(float(j['total_receipt']))
                 else:
                     total_payment_data.append(float(0))
-            print(rqueryset,i['customer_name'])    
+
             total_invoice_date.append(float(i['total_sales']))
         context = {
             'all_customer': all_customer,
@@ -156,9 +158,9 @@ def sales_report(request):
             s = f"{intcomma('{:0.3f}'.format(i['total_sales']))} د.ل "
             percent.append({'customer_id':i['customer_id'], 'customer_name':i['customer_name'],'net_percent':net_percent,'total_sales':s})
             
-            print(net_percent)         
+            
         total_sales = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
-        print(percent)
+        
         context = {
         'customer_cat':customer_cat,
         'data':data,
@@ -316,14 +318,18 @@ def change_password(request):
     return render(request,'accountdash/change_password.html')
 
 def customer_invoice(request,customer_id,priod):
+    total =0
     if priod == 0 :
         customer_invoices = Invoice.objects.filter(invoice_amount__gt=0,customer_id_id=customer_id)
     else:    
         customer_invoices = Invoice.objects.filter(invoice_amount__gt=0,customer_id_id=customer_id,proid=priod)
-    cust= Customer.objects.get(id =customer_id)                    
+    cust= Customer.objects.get(id =customer_id)
+    for i in customer_invoices:
+        total += i.invoice_amount                    
     context = {
         'cust':cust,
-        'customer_invoices':customer_invoices
+        'customer_invoices':customer_invoices,
+        'total':total,
     }
-    # print(cust_id)
+    
     return render(request,'accountdash/customer_invoice.html',context)
