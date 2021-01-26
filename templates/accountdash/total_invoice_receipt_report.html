@@ -72,6 +72,37 @@
                   </div>
                 </div>
                 <button type="submit" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
+                <div class="row">
+                  <div class="col-12">
+                    <!-- /.card -->
+                    <div class="card-body table-responsive p-0 text-center" style="height: 300px;">
+                      <table class="table table-bordered table-head-fixed text-nowrap">
+                        <thead>
+                          <tr>
+                            <th >الرصيد</th>
+                            <th>إجمالي المبالغ المحصلة</th>
+                            <th>إجمالي قيمة الفواتير</th>
+                            <th>إسم لزبون</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for customer in customer_blance %}
+                          <tr>
+                            <td>{{customer.c_balance}}</td>
+                            <td>
+                              {{customer.total_receipt}}
+                            </td>
+                            <td><a href="{% url 'customer_balance' customer.customer_id priod %}"  id="customer_invoices">{{customer.total_invoice}}</a>  </td>
+                            <td><a href="{% url 'customer_balance' customer.customer_id priod %}"  id="customer_invoices">{{customer.customer_name}}</a>  </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
             </form>
             {% if total_sales %}
               <br>
@@ -136,7 +167,18 @@ var config = {
         display: true,
         text: 'الايرادات والمبالغ المحصلة '
       },
-    //end tooltips        
+      tooltips: {
+        callbacks: {
+              label: function(tooltipItem, data) {
+                  var value = data.datasets[0].data[tooltipItem.index];
+                  if(parseInt(value) >= 1000){
+                             return 'د.ل' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                          } else {
+                             return 'د.ل' + value;
+                          }
+              }
+        } // end callbacks:
+      }, //end tooltips   
       responsive: true,
       maintainAspectRatio: false,
     }

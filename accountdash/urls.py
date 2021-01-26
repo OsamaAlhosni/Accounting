@@ -11,6 +11,7 @@ urlpatterns = [
     path('receipt_report', views.receipt_report, name='receipt_report'),    
     path('customer_invoice/<int:customer_id>/<int:priod>', views.customer_invoice, name='customer_invoice'),        
     path('total_inv_rec_report', views.total_inv_rec_report, name='total_inv_rec_report'),        
+    path('customer_balance/<int:customer_id>/<int:priod>', views.customer_balance, name='customer_balance'),        
     path('mylogout', views.mylogout, name='mylogout'),
     path('mylogin', views.mylogin, name='mylogin'),
     path('change_password', views.change_password, name='change_password'),
