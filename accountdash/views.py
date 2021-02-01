@@ -76,8 +76,6 @@ def index(request):
         cat_data.append(float(entry['total_sales']))
 
     # Total Sales & Receipts
-    # iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_name').annotate(
-    #         total_sales=Sum('invoice_amount'))[:20]
 
     squeryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_id_id').annotate(
         total_sales=Sum('invoice_amount'))[:20]
@@ -262,8 +260,6 @@ def total_inv_rec_report(request):
                 rqueryset = Receipt.objects.filter(receipt_amount__gt=0, customer_id__customer_name=cust.customer_name).values('customer_id').annotate(
                     total_receipt=Sum('receipt_amount'))
 
-            # rqueryset = Receipt.objects.filter(receipt_amount__gt=0, customer_id__customer_name=cust.customer_name).values('customer_id').annotate(
-            #     total_receipt=Sum('receipt_amount'))
             for j in rqueryset:
 
                 if (j['total_receipt']):
@@ -375,32 +371,39 @@ def customer_balance(request,customer_id,priod):
     total_invoice=0
     total_receipt = 0
     transaction = []
-    if priod == 0:
-        customer_invoices = Invoice.objects.filter(
+    balance = 0
+    
+    customer_invoices = Invoice.objects.filter(
             invoice_amount__gt=0, customer_id_id=customer_id)
-        # cutomer_receipt = Receipt.objects.filter(receipt_amount__gt=0,customer_id=customer_id)
-    else:
-        # cutomer_receipt = Receipt.objects.filter(receipt_amount__gt=0,customer_id=customer_id,priod=priod)
-        customer_invoices = Invoice.objects.filter(
-            invoice_amount__gt=0, customer_id_id=customer_id, proid=priod)
+    if priod != 0:            
+        customer_invoices = customer_invoices.objects.filter(proid=priod)
     cust = Customer.objects.get(id=customer_id)
 
     for i in customer_invoices:
-        cutomer_receipt = Receipt.objects.filter(receipt_amount__gt=0,customer_id=i.customer_id_id,priod = i.proid)
-        transaction.append({'customer_id':i.customer_id_id,'customer_name':cust.customer_name,'invoice_no':i.Invoice_no,
-        'invoice_amount':i.invoice_amount,'receipt_no':cutomer_receipt['receipt_no'],'receipt_amount':cutomer_receipt.receipt_amount})
+        customer_receipt = Receipt.objects.filter(customer_id=i.customer_id_id,priod = i.proid)
+        
+        if customer_receipt:
+            for j in customer_receipt:
+                transaction.append({'customer_id':i.customer_id_id,'customer_name':cust.customer_name,'invoice_no':i.Invoice_no,
+                'invoice_amount':i.invoice_amount,'receipt_no':j.receipt_no,'receipt_amount':j.receipt_amount,'priod':i.proid,'year':i.tyear})
+                total_receipt += j.receipt_amount
+        else:
+            transaction.append({'customer_id':i.customer_id_id,'customer_name':cust.customer_name,'invoice_no':i.Invoice_no,
+             'invoice_amount':i.invoice_amount,'receipt_no':'','receipt_amount':'','priod':i.proid,'year':i.tyear})
         total_invoice += i.invoice_amount
-        total_receipt += cutomer_receipt.receipt_amount
-    # for i in cutomer_receipt:
-    #     total_receipt += i.receipt_amount
-    print(transaction)
+    balance = total_invoice - total_receipt
+    if balance < 0:
+        flag =True
+    else:
+        flag = False
+    balance = f"{intcomma('{:0.3f}'.format(balance))} د.ل "   
     context = {
         'cust': cust,
-        'customer_invoices': customer_invoices,
-        'cutomer_receipt':cutomer_receipt,
-        'total_invoice': total_invoice,
-        'total_receipt':total_receipt,
+        'total_invoice': f"{intcomma('{:0.3f}'.format(total_invoice))} د.ل ",
+        'total_receipt':f"{intcomma('{:0.3f}'.format(total_receipt))} د.ل ",
         'transaction':transaction,
+        'balance': balance,
+        'flag':flag,
     }
 
     return render(request,'accountdash/customer_balance.html',context)

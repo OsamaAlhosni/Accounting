@@ -30,7 +30,7 @@ def add_receipt(request):
         payment_type_id = request.POST.get('payment_type')
         transfare_date = request.POST.get('transfare_date')
         transfare_no = request.POST.get('transfare_no')
-        if receipt_no == "" or receipt_date == "" or receipt_amount == "" or customer_id == "":
+        if receipt_no == "" or receipt_date == "" or receipt_amount == "" or customer_id == "" or receipt_priod == "" or receipt_year == "" or receipt_type_id == "" or bank_id == "":
             error = 'جميع الحقول إجبارية ويجب إدخالها'
             alert = 'alert-danger'
             url_back = '{% url add_receipt %}'
@@ -76,7 +76,6 @@ def edit_receipt(request, receipt_id):
     payment_types = PaymentType.objects.all()
     banks = Bank.objects.all()
     receipt_types = ReceiptType.objects.all()
-
 
     if request.method == 'POST':
         receipt_no = request.POST.get('receipt_no')
@@ -124,11 +123,11 @@ def edit_receipt(request, receipt_id):
         return redirect('receipt_list')
     else:
         context = {
-        'customers': customers,
-        'payment_types': payment_types,
-        'banks': banks,
-        'receipt_types': receipt_types,
-        'receipt': receipt,
+            'customers': customers,
+            'payment_types': payment_types,
+            'banks': banks,
+            'receipt_types': receipt_types,
+            'receipt': receipt,
         }
         return render(request, 'casa/edit_receipt.html', context)
 

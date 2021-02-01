@@ -79,14 +79,14 @@ def invoice_list(request):
 
     if not request.user.is_authenticated:
      return redirect('mylogin')
-
+    customers = Customer.objects.all()
     invoices = Invoice.objects.filter(commited=True)
     # context = {'invoices': invoices}
     paginator = Paginator(invoices, 8)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'invoice/invoice_list.html', {'page_obj': page_obj})
+    return render(request, 'invoice/invoice_list.html', {'page_obj': page_obj,'customers':customers})
 
 
 def edit_invoice(request, invoice_id):
@@ -136,3 +136,28 @@ def delete_invoice(request, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id)
     invoice.delete()
     return redirect('invoice_list')
+
+def search(request):
+    invoices = Invoice.objects.all()
+    invoice_no = request.POST.get('invoice_no')
+    priod = request.POST.get('priod')
+    customer_name= request.POST.get('customer_name')
+    year = request.POST.get('year')
+
+    if invoice_no != '':
+        invoices = invoices.filter(Invoice_no = invoice_no)
+
+    if int(customer_name) > 0:
+      invoices = invoices.filter(customer_id_id = customer_name)  
+
+    if int(priod) > 0:
+      invoices = invoices.filter(proid = priod)  
+
+    paginator = Paginator(invoices, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'invoices':page_obj
+    }
+
+    return render(request,'invoice/search.html',context)

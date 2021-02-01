@@ -8,7 +8,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header  ">
-          <h3 class="card-title1 text-center text-success">كشف فواتير  : {{ cust.customer_name }} </h3>
+          <h3 class="card-title1 text-center text-success">كشف حساب   : {{ cust.customer_name }} </h3>
 
         </div>
         <!-- /.card-header -->
@@ -16,20 +16,28 @@
           <table class="table table-hover text-nowrap">
             <thead>
               <tr>
+                <th>القيمة</th>
+                <th>تاريخ الإيصال</th>
+                <th>رقم الإيصال</th>
+                <th>القيمة</th>
+                <th>تاريخ الفاتورة</th>
+                <th>رقم الفاتورة</th>
                 <th>السنة</th>
                 <th>الفترة</th>
-                <th>القيمة</th>
-                <th>رقم الفاتورة</th>
               </tr>
             </thead>
             <tbody>
               
-              {% for i  in  customer_invoices %}
+              {% for i  in  transaction %}
               <tr>
-                <td><span class="tag tag-success">{{i.tyear}}</span></td>
-                <td>{{i.proid}}</td>
-                <td>{{i.invoice_amount|intcomma }}</td>
-                <td>{{i.Invoice_no|default_if_none:'لايوجد'}}</td>
+                <td class ="text-danger"><strong>{{i.receipt_amount}}</strong> </td>
+                <td></td>
+                <td class ="text-danger" >{{i.receipt_no|default_if_none:'لايوجد'}}</td>
+                <td>{{i.invoice_amount}}</td>
+                <td></td>
+                <td>{{i.invoice_no|default_if_none:'لايوجد'}}</td>
+                <td>{{i.year}}</td>
+                <td>{{i.priod}}</td>
               </tr>
               {% endfor %}
                 
@@ -49,8 +57,17 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body text-center">
-          <h2 class="text-success">المجموع :{{total_invoice|intcomma}}</h2>
-          <h2 class="text-success">المجموع :{{total_receipt|intcomma}}</h2>
+          <h2 class="text-success">مجموع قيمة الفواتير :{{total_invoice}}</h2>
+          <h2 class="text-info">مجموع قيمة إيصالات السداد :{{total_receipt}}</h2>
+          <hr>
+          
+          {% if not flag %}
+          <h2 class="text-danger">صافي الحساب المتبقي :{{balance}}</h2> 
+          {% else %}   
+          <h2 class="text-primary">لديه دفعات مقدمة تحت الحساب :{{balance}}</h2>
+          {% endif %}
+              
+          
           <a class="btn btn-outline-info" href="javascript:history.back()">العودة الى التقرير</a>
         </div>
         <!-- /.card-body -->
