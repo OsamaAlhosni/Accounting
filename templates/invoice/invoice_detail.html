@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} 
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-text-width"></i>
+            تفاصيل الفاتورة
+          </h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body text-right">
+          <h1>{{customer_name}}</h1>
+          
+          {% for i  in invoice %}
+            <h2>{{i.Invoice_no}} :رقم الفاتورة</h2>
+            <h2>{{i.invoice_amount|intcomma}}القيمة :</h2>
+            <h2>{{i.proid}}الفترة :</h2>
+            <h2> السنة :{{i.tyear}}</h2>
+            <h2>تسويات سابقة :{{i.balance}}</h2>
+            <h2> من تاريخ :{{i.from_date}}</h2>
+            <h2>إلى تاريخ :{{i.balance_to}}</h2>
+          {% endfor %}
+                
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- ./col -->
+    <!-- <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-text-width"></i>
+            Text Emphasis
+          </h3>
+        </div>
+        <div class="card-body">
+          <p class="lead">Lead to emphasize importance</p>
+
+          <p class="text-success">Text green to emphasize success</p>
+
+          <p class="text-info">Text aqua to emphasize info</p>
+
+          <p class="text-primary">Text light blue to emphasize info (2)</p>
+
+          <p class="text-danger">Text red to emphasize danger</p>
+
+          <p class="text-warning">Text yellow to emphasize warning</p>
+
+          <p class="text-muted">Text muted to emphasize general</p>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  {% endblock %}

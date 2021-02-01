@@ -80,13 +80,18 @@ def invoice_list(request):
     if not request.user.is_authenticated:
      return redirect('mylogin')
     customers = Customer.objects.all()
+    year_search = Invoice.objects.values_list('tyear',flat=True).distinct()
     invoices = Invoice.objects.filter(commited=True)
-    # context = {'invoices': invoices}
-    paginator = Paginator(invoices, 8)
 
+    paginator = Paginator(invoices, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'invoice/invoice_list.html', {'page_obj': page_obj,'customers':customers})
+    context = {
+        'page_obj': page_obj,
+        'customers':customers,
+        'year_search':year_search,
+        }
+    return render(request, 'invoice/invoice_list.html', context)
 
 
 def edit_invoice(request, invoice_id):
@@ -153,6 +158,9 @@ def search(request):
     if int(priod) > 0:
       invoices = invoices.filter(proid = priod)  
 
+    if year != '0':
+        invoices = invoices.filter(tyear = year)  
+
     paginator = Paginator(invoices, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -161,3 +169,13 @@ def search(request):
     }
 
     return render(request,'invoice/search.html',context)
+
+def invoice_detail(request,invoice_id):
+    invoice = Invoice.objects.filter(id=invoice_id)
+    for i in invoice:
+        customer_name = i.customer_name
+    context = {
+        'invoice':invoice,
+        'customer_name':customer_name,
+    }
+    return render(request,'invoice/invoice_detail.html',context)

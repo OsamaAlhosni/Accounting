@@ -36,13 +36,35 @@
                 <td>{{i.balance_to|date:'Y-m-d'}}</td>
                 <td>{{i.from_date|date:'Y-m-d'}}</td>
                 <td>{{i.balance|intcomma}}</td>
-                <td>{{i.customer_name}}</td>                                                                
+                <td><a href="{% url 'invoice_detail' i.id  %}"  id="invoice_detail">{{i.customer_name}}</a></td>                                                                
                 <td>{{i.Invoice_no|default_if_none:'لايوجد'}}</td>
               </tr>
               {% endfor %}
                 
             </tbody>
           </table>
+          
+            {% if invoices.has_other_pages %}
+            <ul class="pagination">
+              {% if invoices.has_previous %}
+                <li><a href="?page={{ invoices.previous_page_number }}">&laquo;</a></li>
+              {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+              {% endif %}
+              {% for i in invoices.paginator.page_range %}
+                {% if invoices.number == i %}
+                  <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                  <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if invoices.has_next %}
+                <li><a href="?page={{ invoices.next_page_number }}">&raquo;</a></li>
+              {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+              {% endif %}
+            </ul>
+            {% endif %}
         </div>
         <!-- /.card-body -->
       </div>
