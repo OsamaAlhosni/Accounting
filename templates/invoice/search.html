@@ -4,71 +4,40 @@
 
 {% block content %}
 
-<div class="row">
+  <div class="row">
     <div class="col-12">
-      <div class="card">
-        <div class="card-header  ">
-          <h3 class="card-title1 text-center text-success">نتيجة البحث </h3>
-
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body table-responsive p-0 text-right">
-          <table class="table table-hover text-nowrap">
-            <thead>
-              <tr>
-                <th>السنة</th>
-                <th>الفترة</th>
-                <th>القيمة</th>
-                <th >من</th>
-                <th >إلى</th>
-                <th >التسويات</th>
-                <th >إسم الجهة</th>                
-                <th>رقم الفاتورة</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-              {% for i  in  invoices %}
-              <tr>
-                <td><span class="tag tag-success">{{i.tyear}}</span></td>
-                <td>{{i.proid}}</td>
-                <td>{{i.invoice_amount|intcomma }}</td>
-                <td>{{i.balance_to|date:'Y-m-d'}}</td>
-                <td>{{i.from_date|date:'Y-m-d'}}</td>
-                <td>{{i.balance|intcomma}}</td>
-                <td><a href="{% url 'invoice_detail' i.id  %}"  id="invoice_detail">{{i.customer_name}}</a></td>                                                                
-                <td>{{i.Invoice_no|default_if_none:'لايوجد'}}</td>
-              </tr>
-              {% endfor %}
-                
-            </tbody>
-          </table>
-          
-            {% if invoices.has_other_pages %}
-            <ul class="pagination">
-              {% if invoices.has_previous %}
-                <li><a href="?page={{ invoices.previous_page_number }}">&laquo;</a></li>
-              {% else %}
-                <li class="disabled"><span>&laquo;</span></li>
-              {% endif %}
-              {% for i in invoices.paginator.page_range %}
-                {% if invoices.number == i %}
-                  <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                {% else %}
-                  <li><a href="?page={{ i }}">{{ i }}</a></li>
-                {% endif %}
-              {% endfor %}
-              {% if invoices.has_next %}
-                <li><a href="?page={{ invoices.next_page_number }}">&raquo;</a></li>
-              {% else %}
-                <li class="disabled"><span>&raquo;</span></li>
-              {% endif %}
-            </ul>
-            {% endif %}
-        </div>
-        <!-- /.card-body -->
-      </div>
       <!-- /.card -->
+      <div class="card-body table-responsive p-0 text-center" style="height: 300px;">
+        <table class="table table-bordered table-head-fixed text-nowrap">
+          <thead>
+            <tr>
+              <th>السنة</th>
+              <th>الفترة</th>
+              <th>القيمة</th>
+              <th >من</th>
+              <th >إلى</th>
+              <th >التسويات</th>
+              <th >إسم الجهة</th>                
+              <th>رقم الفاتورة</th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for i  in  invoices %}
+            <tr>
+              <td><span class="tag tag-success">{{i.tyear}}</span></td>
+              <td>{{i.proid}}</td>
+              <td>{{i.invoice_amount|intcomma }}</td>
+              <td>{{i.balance_to|date:'Y-m-d'}}</td>
+              <td>{{i.from_date|date:'Y-m-d'}}</td>
+              <td>{{i.balance|intcomma}}</td>
+              <td><a href="{% url 'invoice_detail' i.id  %}"  id="invoice_detail">{{i.customer_name}}</a></td>                                                                
+              <td>{{i.Invoice_no|default_if_none:'لايوجد'}}</td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
       <div class="card">
         <div class="card-header">
           <h2 class="card-title text-success">
@@ -84,8 +53,8 @@
         </div>
         <!-- /.card-body -->
       </div>
+  
     </div>
   </div>
 
-    
 {% endblock %}

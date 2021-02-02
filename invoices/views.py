@@ -171,11 +171,8 @@ def search(request):
     return render(request,'invoice/search.html',context)
 
 def invoice_detail(request,invoice_id):
-    invoice = Invoice.objects.filter(id=invoice_id)
-    for i in invoice:
-        customer_name = i.customer_name
+    invoice = get_object_or_404(Invoice, pk=invoice_id)
     context = {
         'invoice':invoice,
-        'customer_name':customer_name,
     }
     return render(request,'invoice/invoice_detail.html',context)

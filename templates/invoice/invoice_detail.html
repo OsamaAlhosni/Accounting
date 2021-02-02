@@ -1,60 +1,98 @@
-{% extends 'base.html' %} {% load static %} {% load humanize %} 
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
 {% block content %}
 
+<body class="hold-transition sidebar-mini">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Main content -->
+      <section class="content">
+          <div class="row">
+            <div class="col-md-6 text-right">
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title">التسويات السابقة</h3>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="inputName">قيمة الديون المرحلة</label>
+                    <input type="text" name="balance" id="balance" class="form-control text-right"
+                      value="{{invoice.balance|intcomma}}" readonly>
+                    <label for="inputName">قيمة الديون المرحلة</label>
+                    <input type="date" name="ff" id="ff" class="form-control text-right"
+                      value="{{invoice.from_date|date:'Y-m-d'}}" readonly>
+                    <label for="inputName">قيمة الديون المرحلة</label>
+                    <input type="date" name="tt" id="tt" class="form-control text-right"
+                      value="{{invoice.balance_to|date:'Y-m-d'}}" readonly>
 
-<div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">
-            <i class="fas fa-text-width"></i>
-            تفاصيل الفاتورة
-          </h3>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body text-right">
-          <h1>{{customer_name}}</h1>
-          
-          {% for i  in invoice %}
-            <h2>{{i.Invoice_no}} :رقم الفاتورة</h2>
-            <h2>{{i.invoice_amount|intcomma}}القيمة :</h2>
-            <h2>{{i.proid}}الفترة :</h2>
-            <h2> السنة :{{i.tyear}}</h2>
-            <h2>تسويات سابقة :{{i.balance}}</h2>
-            <h2> من تاريخ :{{i.from_date}}</h2>
-            <h2>إلى تاريخ :{{i.balance_to}}</h2>
-          {% endfor %}
-                
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
+                  </div>
+
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <div class="col-md-6 text-right">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">تفاصيل الفاتورة</h3>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="inputName">إسم الجهة</label>
+                    <input type="text" name="customer_name" id="inputName" class="form-control text-right"
+                      value="{{invoice.customer_name}}" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputStatus">رقم الفاتورة</label>
+                    <input type="text" name="invoice_no" id="inputName" class="form-control text-right"
+                      value="{{invoice.Invoice_no}}" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputClientCompany">قيمة الفاتورة</label>
+                    <input type="text" name="invoice_amount" id="invoice_amount" class="form-control  text-right"
+                      value="{{invoice.invoice_amount|intcomma}}" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputProjectLeader">ملاحظات</label>
+                    <input type="text" name="notes" id="notes" class="form-control text-right"
+                      value="{{invoice.notes}}" readonly>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <a href="javascript:history.back()" class="btn btn-warning">عودة إلى القائمة</a>
+              
+            </div>
+          </div>
+
+      </section>
+      <!-- /.content -->
     </div>
-    <!-- ./col -->
-    <!-- <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">
-            <i class="fas fa-text-width"></i>
-            Text Emphasis
-          </h3>
-        </div>
-        <div class="card-body">
-          <p class="lead">Lead to emphasize importance</p>
+    <!-- /.content-wrapper -->
 
-          <p class="text-success">Text green to emphasize success</p>
 
-          <p class="text-info">Text aqua to emphasize info</p>
-
-          <p class="text-primary">Text light blue to emphasize info (2)</p>
-
-          <p class="text-danger">Text red to emphasize danger</p>
-
-          <p class="text-warning">Text yellow to emphasize warning</p>
-
-          <p class="text-muted">Text muted to emphasize general</p>
-        </div>
-      </div>
-    </div> -->
   </div>
-  {% endblock %}
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'js/adminlte.min.js' %}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{% static 'js/demo.js' %}"></script>
+</body>
+{% endblock content %}

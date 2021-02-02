@@ -30,10 +30,10 @@
               
               {% for i  in  transaction %}
               <tr>
-                <td class ="text-danger"><strong>{{i.receipt_amount}}</strong> </td>
+                <td class ="text-danger"><strong>{{i.receipt_amount|intcomma}}</strong> </td>
                 <td></td>
                 <td class ="text-danger" >{{i.receipt_no|default_if_none:'لايوجد'}}</td>
-                <td>{{i.invoice_amount}}</td>
+                <td>{{i.invoice_amount|intcomma}}</td>
                 <td></td>
                 <td>{{i.invoice_no|default_if_none:'لايوجد'}}</td>
                 <td>{{i.year}}</td>
