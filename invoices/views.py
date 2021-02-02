@@ -129,7 +129,6 @@ def save_to_database(request):
 
     update_counts = Invoice.objects.filter(
         commited=False).update(commited=True)
-    print(update_counts)
     return redirect('invoice_list')
 
 

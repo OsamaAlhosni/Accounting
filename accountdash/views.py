@@ -36,6 +36,7 @@ def index(request):
     # Total All Receipts
     all_receipt_amount = Receipt.objects.aggregate(
         sum=Sum('receipt_amount')).get('sum')
+    print(all_receipt_amount)
     if all_receipt_amount:
         all_receipt_amount = f"د.ل {intcomma('{:0.3f}'.format(all_receipt_amount))}"
     else:
@@ -183,6 +184,9 @@ def receipt_report(request):
     # Receipts Detail Chart label & data
     labels = []
     data = []
+    prepare = []
+    percent = []
+
     total_receipt = 0
     customer_cat = CustomerCatogry.objects.all()
 
@@ -205,6 +209,16 @@ def receipt_report(request):
             labels.append(customer.customer_name)
             data.append(float(entry['total_receipt']))
             total_receipt += float(entry['total_receipt'])
+            prepare.append({'customer_id': customer.pk, 'customer_name': customer.customer_name,
+                            'total_receipt': float(entry['total_receipt'])})
+        percet_sales = total_receipt
+        for i in prepare:
+            net_percent = round((i['total_receipt']/percet_sales)*100, 2)
+            s = f"{intcomma('{:0.3f}'.format(i['total_receipt']))} د.ل "
+            percent.append(
+                {'customer_id': i['customer_id'], 'customer_name': i['customer_name'], 'net_percent': net_percent, 'total_receipt': s})
+        
+
         total_receipt = f"{intcomma('{:0.3f}'.format(total_receipt))} د.ل "
         context = {
             'customer_cat': customer_cat,
@@ -214,6 +228,8 @@ def receipt_report(request):
             'priod': int(priod),
             'cat_set': int(cat),
             'total_receipt': total_receipt,
+            'percet_sales': percet_sales,
+            'percent': percent,
         }
 
         return render(request, 'accountdash/receipt_report.html', context)
@@ -366,6 +382,26 @@ def customer_invoice(request, customer_id, priod):
     }
 
     return render(request, 'accountdash/customer_invoice.html', context)
+
+def customer_receipt(request,customer_id, priod):
+    total = 0
+    if priod == 0:
+        customer_receipts = Receipt.objects.filter(
+            receipt_amount__gt=0, customer_id=customer_id)
+    else:
+        customer_receipts = Receipt.objects.filter(
+            receipt_amount__gt=0, customer_id=customer_id, priod=priod)
+    cust = Customer.objects.get(id=customer_id)
+    for i in customer_receipts:
+        total += i.receipt_amount
+    context = {
+        'cust': cust,
+        'customer_receipts': customer_receipts,
+        'total': total,
+    }
+
+    return render(request, 'accountdash/customer_receipt.html', context)
+
 
 def customer_balance(request,customer_id,priod):
     total_invoice=0

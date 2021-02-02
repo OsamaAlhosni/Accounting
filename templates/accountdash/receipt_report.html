@@ -5,12 +5,8 @@
 {% block content %}
 
 
-
 <section class="content">
   <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
-    <!-- /.row -->
-    <!-- Main row -->
     <div class="row">
       <div class="col">
         <div class="card card-primary">
@@ -52,10 +48,9 @@
                         name="year" placeholder="السنة" 
                         {% if year %}
                         value = "{{year}}"
-                          
                         {% endif %}
-                          >
-                            </div>
+                      >
+                    </div>
                   </div>                
 
                   <div class="col-md-3 ">
@@ -72,6 +67,38 @@
                   </div>
                 </div>
                 <button type="submit" class="btn btn-block btn-outline-primary btn-lg">عرض النتيجة</button>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card-body table-responsive p-0 text-center" style="height: 300px;">
+                      <table class="table table-bordered table-head-fixed text-nowrap">
+                        <thead>
+                          <tr>
+                            <th style="width: 40px">النسبة المئوية</th>
+                            <th>نسبة التحصيل من إجمالي المبالغ المحصلة</th>
+                            <th>القيمة المحصلة</th>
+                            <th>إسم لزبون</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for customer in percent %}
+                          <tr>
+                            <td><span id="percent" class="badge bg-danger"> {{customer.net_percent}}</span></td>
+                            <td>
+                              <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-danger" style="width: {{customer.net_percent}}%"></div>
+                              </div>
+                            </td>
+                            <td><a href="{% url 'customer_receipt' customer.customer_id priod %}"  id="customer_invoices">{{customer.total_receipt}}</a>  </td>
+                            <td><a href="{% url 'customer_receipt' customer.customer_id priod %}"  id="customer_invoices">{{customer.customer_name}}</a>  </td>
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
             </form>
             
             {% if total_receipt %}
@@ -86,15 +113,11 @@
               <canvas id="invoice-chart" height="500"></canvas>
             </div>
           </div>
-          <!-- /.card-body -->
         </div>
-        <!-- /.card -->
       </div>
 
     </div>
-
-    <!-- /.row (main row) -->
-  </div><!-- /.container-fluid -->
+  </div>
 </section>
 
 <script>
