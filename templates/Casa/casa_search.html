@@ -1,158 +1,60 @@
-{% extends 'base.html' %}
+{%extends 'base.html' %}
 {% load static %}
-{% load humanize  %}
+{% load humanize %}
+
 {% block content %}
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>شاشة البحث</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
-</head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
+  <div class="row">
+    <div class="col-12">
+      <!-- /.card -->
+      <div class="card-body table-responsive p-0 text-center" style="height: 300px;">
+        <table class="table table-bordered table-head-fixed text-nowrap">
+          <thead>
+            <tr>
+              <th>السنة</th>
+              <th>الفترة</th>
+              <th>القيمة</th>
+              <!-- <th >من</th>
+              <th >إلى</th>
+              <th >التسويات</th> -->
+              <th >إسم الجهة</th>                
+              <th>رقم الإيصال</th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for i  in  receipts %}
+            <tr>
+              <td><span class="tag tag-success">{{i.syear}}</span></td>
+              <td>{{i.priod}}</td>
+              <td>{{i.receipt_amount|intcomma }}</td>
+              <!-- <td>{{i.balance_to|date:'Y-m-d'}}</td>
+              <td>{{i.from_date|date:'Y-m-d'}}</td>
+              <td>{{i.balance|intcomma}}</td> -->
+              <td><a href="{% url 'invoice_detail' i.id  %}"  id="invoice_detail">{{i.customer}}</a></td>                                                                
+              <td>{{i.receipt_no|default_if_none:'لايوجد'}}</td>
+            </tr>
+            {% endfor %}
 
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper1">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <h2 class="text-center display-4">البحث في ايصالات التحصيل</h2>
+          </tbody>
+        </table>
       </div>
-      <!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <form action="enhanced-results.html">
-                <div class="row">
-                    <div class="col-md-10 offset-md-1">
-                        <div class="row">
-                            <div class="col-3 text-right">
-                                <div class="form-group">
-                                    <label>نوع الزبون</label>
-                                    <select class="select2" style="width: 100%;">
-                                        <option selected>شركات القطاع</option>
-                                        <option>شركات عامة</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3 text-right">
-                                <div class="form-group">
-                                    <label >إسم الزبون</label>
-                                    <select class="select2 " style="width: 100%;">
-                                        <option selected>شركة المدار</option>
-                                        <option>شركة الجيل</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6 text-right">
-                                <div class="form-group">
-                                    <label>نوع البحث</label>
-                                    <select class="select2" multiple="multiple" data-placeholder="في كل الحقول" style="width: 100%;">
-                                        <option>قيمة الإيصال</option>
-                                        <option>تاريخ الإيصال</option>
-                                        <option>ملاحظات</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group input-group-lg">
-                                <input type="search" class="form-control form-control-lg text-right" placeholder="اكتب كلمة البحث هنا" value="Lorem ipsum">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-lg btn-default">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div class="row mt-3">
-                <div class="col-md-10 offset-md-1">
-                    <div class="list-group">
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col px-4">
-                                    <div>
-                                        <div class="float-right">2020-04-20 04:04pm</div>
-                                        <h3>Lorem ipsum dolor sit amet</h3>
-                                        <p class="mb-0">consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo" style="max-height: 160px;">
-                                </div>
-                                <div class="col px-4">
-                                    <div>
-                                        <div class="float-right">2020-04-20 10:14pm</div>
-                                        <h3>Lorem ipsum dolor sit amet</h3>
-                                        <p class="mb-0">consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <iframe width="240" height="160" src="https://www.youtube.com/embed/WEkSYw3o5is?controls=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" class="border-0" allowfullscreen></iframe>
-                                </div>
-                                <div class="col px-4">
-                                    <div>
-                                        <div class="float-right">2020-04-20 11:54pm</div>
-                                        <h3>Lorem ipsum dolor sit amet</h3>
-                                        <p class="mb-0">consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title text-success">
+            <!-- <i class="fas fa-list-alt "></i> -->
+            <i class="far fa-chart-bar"></i>
+            إجمالي قيمة الإيصالات
+          </h2>
         </div>
-    </section>
+        <!-- /.card-header -->
+        <div class="card-body text-center">
+          <!-- <h2 class="text-success">المجموع :{{total|intcomma}}</h2> -->
+          <a class="btn btn-outline-info" href="javascript:history.back()">العودة الى التقرير</a>
+        </div>
+        <!-- /.card-body -->
+      </div>
+  
+    </div>
   </div>
 
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
-<!-- Bootstrap 4 -->
-<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- Select2 -->
-<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{% static 'js/adminlte.min.js' %}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{% static 'js/demo.js' %}"></script>
-<script>
-    $(function () {
-      $('.select2').select2()
-    });
-</script>
-</body>
 {% endblock %}
-</html>

@@ -58,12 +58,23 @@ def add_receipt(request):
 def receipt_list(request):
     if not request.user.is_authenticated:
         return redirect('mylogin')
+    customers = Customer.objects.all()
+    year_search = Receipt.objects.values_list('syear',flat=True).distinct()
+    invoices = Receipt.objects.filter()
+
 
     receipts = Receipt.objects.all()
     paginator = Paginator(receipts, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'casa/receipt_list1.html', {'page_obj': page_obj})
+
+    context = {
+        'page_obj': page_obj,
+        'customers':customers,
+        'year_search':year_search,
+        }
+
+    return render(request, 'casa/receipt_list1.html', context)
 
 
 def edit_receipt(request, receipt_id):
@@ -147,5 +158,36 @@ def msg(request):
 
 
 def casa_search(request):
+    receipts = Receipt.objects.all()
+    receipt_no = request.POST.get('receipt_no')
+    priod = request.POST.get('priod')
+    customer_name= request.POST.get('customer_name')
+    year = request.POST.get('year')
+    # print(priod,year,customer_name,receipt_no)
+    if receipt_no != '':
+        receipts = receipts.filter(receipt_no = receipt_no)
 
-    return render(request, 'casa/casa_search.html')
+    if int(customer_name) > 0:
+      receipts = receipts.filter(customer_id = customer_name)  
+
+    if int(priod) > 0:
+      receipts = receipts.filter(priod = priod)  
+
+    if year != '0':
+        receipts = receipts.filter(syear = year)  
+    print(receipts)
+    paginator = Paginator(receipts, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'receipts':page_obj
+    }
+
+    return render(request, 'casa/casa_search.html',context)
+
+def receipt_detail(request,receipt_id):
+    receipt = get_object_or_404(Receipt, pk=receipt_id)
+    context = {
+        'receipt':receipt,
+    }
+    return render(request,'receipt/receipt_detail.html',context)
