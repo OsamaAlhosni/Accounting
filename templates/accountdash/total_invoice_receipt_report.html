@@ -92,8 +92,8 @@
                             <td>
                               {{customer.total_receipt}}
                             </td>
-                            <td><a href="{% url 'customer_balance' customer.customer_id priod %}"  id="customer_invoices">{{customer.total_invoice}}</a>  </td>
-                            <td><a href="{% url 'customer_balance' customer.customer_id priod %}"  id="customer_invoices">{{customer.customer_name}}</a>  </td>
+                            <td><a href="{% url 'customer_balance' customer.customer_id priod year %}"  id="customer_invoices">{{customer.total_invoice}}</a>  </td>
+                            <td><a href="{% url 'customer_balance' customer.customer_id priod  year%}"  id="customer_invoices">{{customer.customer_name}}</a>  </td>
                           </tr>
                           {% endfor %}
 
@@ -109,10 +109,15 @@
               <hr>
               <h4 class="text-right text-primary">إجمالي المبيعات  : {{total_sales}}</h4>
               <h4 class="text-right text-success">إجمالي المبالغ المحصلة : {{total_receipt}}</h4><hr>
-              <h4 class="text-right text-danger">إجمالي المبالغ المستحقة : {{balance}}</h4>
-              <hr>
-              <br>
-            {% endif %}
+              {% if not flag %}
+                <h4 class="text-right text-danger">إجمالي المبالغ المستحقة : {{balance}}</h4>
+                <hr>
+                <br>
+               {% else %}   
+                <h4 class="text-right text-warning"> توجد لدينا دفعات تحت الحساب أو مبالغ محصلة من تسويات سابقة بقيمة:{{balance}}</h4>
+              {% endif %}
+              
+               {% endif %}
 
             <div class="chart">
               <canvas id="invoice-chart" height="500"></canvas>

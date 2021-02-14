@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Invoice,Customer
-
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from tablib import Dataset
 from django.core.paginator import Paginator
@@ -118,7 +118,9 @@ def edit_invoice(request, invoice_id):
         invoice.balance_to = tdate
         invoice.notes = notes
         invoice.save()
-        return redirect('invoice_list')
+        message = 'تمت عملية الحفظ بنجاح'
+        return render(request,'invoice/edit_invoice.html',{'invoice': invoice,'message':message})
+        
     return render(request, 'invoice/edit_invoice.html', {'invoice': invoice})
 
 

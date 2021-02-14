@@ -158,12 +158,12 @@ def msg(request):
 
 
 def casa_search(request):
+    total_receipt =0
     receipts = Receipt.objects.all()
     receipt_no = request.POST.get('receipt_no')
     priod = request.POST.get('priod')
     customer_name= request.POST.get('customer_name')
     year = request.POST.get('year')
-    # print(priod,year,customer_name,receipt_no)
     if receipt_no != '':
         receipts = receipts.filter(receipt_no = receipt_no)
 
@@ -175,12 +175,14 @@ def casa_search(request):
 
     if year != '0':
         receipts = receipts.filter(syear = year)  
-    print(receipts)
+    for i in receipts:
+        total_receipt +=  i.receipt_amount
     paginator = Paginator(receipts, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        'receipts':page_obj
+        'receipts':page_obj,
+        'total_receipt':total_receipt,
     }
 
     return render(request, 'casa/casa_search.html',context)
@@ -190,4 +192,4 @@ def receipt_detail(request,receipt_id):
     context = {
         'receipt':receipt,
     }
-    return render(request,'receipt/receipt_detail.html',context)
+    return render(request,'casa/receipt_detail.html',context)

@@ -14,9 +14,6 @@
               <th>السنة</th>
               <th>الفترة</th>
               <th>القيمة</th>
-              <!-- <th >من</th>
-              <th >إلى</th>
-              <th >التسويات</th> -->
               <th >إسم الجهة</th>                
               <th>رقم الإيصال</th>
           </tr>
@@ -27,10 +24,7 @@
               <td><span class="tag tag-success">{{i.syear}}</span></td>
               <td>{{i.priod}}</td>
               <td>{{i.receipt_amount|intcomma }}</td>
-              <!-- <td>{{i.balance_to|date:'Y-m-d'}}</td>
-              <td>{{i.from_date|date:'Y-m-d'}}</td>
-              <td>{{i.balance|intcomma}}</td> -->
-              <td><a href="{% url 'invoice_detail' i.id  %}"  id="invoice_detail">{{i.customer}}</a></td>                                                                
+              <td><a href="{% url 'receipt-detail' i.id  %}"  id="invoice_detail">{{i.customer}}</a></td>                                                                
               <td>{{i.receipt_no|default_if_none:'لايوجد'}}</td>
             </tr>
             {% endfor %}
@@ -41,14 +35,13 @@
       <div class="card">
         <div class="card-header">
           <h2 class="card-title text-success">
-            <!-- <i class="fas fa-list-alt "></i> -->
             <i class="far fa-chart-bar"></i>
             إجمالي قيمة الإيصالات
           </h2>
         </div>
         <!-- /.card-header -->
         <div class="card-body text-center">
-          <!-- <h2 class="text-success">المجموع :{{total|intcomma}}</h2> -->
+          <h2 class="text-success">المجموع :{{total_receipt|intcomma}}</h2>
           <a class="btn btn-outline-info" href="javascript:history.back()">العودة الى التقرير</a>
         </div>
         <!-- /.card-body -->

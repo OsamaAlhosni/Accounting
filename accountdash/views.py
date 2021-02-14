@@ -250,9 +250,10 @@ def total_inv_rec_report(request):
         priod = request.POST.get('priod')
         cat = request.POST.get('cat')
         year = request.POST.get('year')
+        print(year)
         if year and int(priod) > 0:
             iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_id_id').annotate(
-                total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id=cat, proid=priod, syear=year)
+                total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id=cat, proid=priod, tyear=year)
         elif not year and int(priod) > 0:
             iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_id_id').annotate(
                 total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id=cat, proid=priod)
@@ -294,6 +295,12 @@ def total_inv_rec_report(request):
             total_sales += float(i['total_sales'])
 
         balance = total_sales - total_receipt
+        flag = False
+        if balance < 0:
+            flag = True
+        else:
+            flag = False
+
         total_receipt = f"{intcomma('{:0.3f}'.format(total_receipt))} د.ل "
         total_sales = f"{intcomma('{:0.3f}'.format(total_sales))} د.ل "
         balance = f"{intcomma('{:0.3f}'.format(balance))} د.ل "
@@ -310,6 +317,7 @@ def total_inv_rec_report(request):
             'total_receipt': total_receipt,
             'balance': balance,
             'customer_blance': customer_blance,
+            'flag': flag,
         }
         return render(request, 'accountdash/total_invoice_receipt_report.html', context)
 
@@ -403,7 +411,7 @@ def customer_receipt(request,customer_id, priod):
     return render(request, 'accountdash/customer_receipt.html', context)
 
 
-def customer_balance(request,customer_id,priod):
+def customer_balance(request,customer_id,priod,year):
     total_invoice=0
     total_receipt = 0
     transaction = []
@@ -413,6 +421,8 @@ def customer_balance(request,customer_id,priod):
             invoice_amount__gt=0, customer_id_id=customer_id)
     if priod != 0:            
         customer_invoices = customer_invoices.objects.filter(proid=priod)
+    if year != 0:
+        customer_invoices = customer_invoices.objects.filter(tyear=year)
     cust = Customer.objects.get(id=customer_id)
 
     for i in customer_invoices:
@@ -421,11 +431,11 @@ def customer_balance(request,customer_id,priod):
         if customer_receipt:
             for j in customer_receipt:
                 transaction.append({'customer_id':i.customer_id_id,'customer_name':cust.customer_name,'invoice_no':i.Invoice_no,
-                'invoice_amount':i.invoice_amount,'receipt_no':j.receipt_no,'receipt_amount':j.receipt_amount,'priod':i.proid,'year':i.tyear})
+                'invoice_amount':i.invoice_amount,'receipt_no':j.receipt_no,'receipt_amount':j.receipt_amount,'priod':i.proid,'year':i.tyear,'invoice_id':i.id,})
                 total_receipt += j.receipt_amount
         else:
             transaction.append({'customer_id':i.customer_id_id,'customer_name':cust.customer_name,'invoice_no':i.Invoice_no,
-             'invoice_amount':i.invoice_amount,'receipt_no':'','receipt_amount':'','priod':i.proid,'year':i.tyear})
+             'invoice_amount':i.invoice_amount,'receipt_no':'','receipt_amount':'','priod':i.proid,'year':i.tyear,'invoice_id':i.id,})
         total_invoice += i.invoice_amount
     balance = total_invoice - total_receipt
     if balance < 0:
