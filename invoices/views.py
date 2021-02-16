@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 import decimal
 from datetime import datetime
 from django.utils.formats import get_format
-
+from .forms import InvoiceForm
 
 def parse_date(date_str):
     """Parse date from string by DATE_INPUT_FORMATS of current language"""
@@ -87,11 +87,11 @@ def invoice_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        'page_obj': page_obj,
+        'page_obj': invoices,
         'customers':customers,
         'year_search':year_search,
         }
-    return render(request, 'invoice/invoice_list.html', context)
+    return render(request, 'invoice/invoice_list1.html', context)
 
 
 def edit_invoice(request, invoice_id):
@@ -177,3 +177,18 @@ def invoice_detail(request,invoice_id):
         'invoice':invoice,
     }
     return render(request,'invoice/invoice_detail.html',context)
+
+def create_invoice(request):
+    form = InvoiceForm(request.POST)
+    if request.method == 'POST':
+      
+        if form.is_valid:
+            print('ssss')
+            form.save()
+            return redirect('invoice_list')
+
+    context = {
+        'form':form,
+    }
+    
+    return render(request,'invoice/invoice_form.html',context)

@@ -420,9 +420,11 @@ def customer_balance(request,customer_id,priod,year):
     customer_invoices = Invoice.objects.filter(
             invoice_amount__gt=0, customer_id_id=customer_id)
     if priod != 0:            
-        customer_invoices = customer_invoices.objects.filter(proid=priod)
+        print(priod)
+        customer_invoices = customer_invoices.filter(proid=priod)
     if year != 0:
-        customer_invoices = customer_invoices.objects.filter(tyear=year)
+       
+        customer_invoices = customer_invoices.filter(tyear=year)
     cust = Customer.objects.get(id=customer_id)
 
     for i in customer_invoices:

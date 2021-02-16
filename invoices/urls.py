@@ -11,6 +11,7 @@ urlpatterns = [
     path('delete_invoice/<int:invoice_id>',
          views.delete_invoice, name='delete_invoice'),
     path('save_to_database/', views.save_to_database, name='save_to_database'),
+    path('create_invoice/', views.create_invoice, name='create_invoice'),
 
 
 ]

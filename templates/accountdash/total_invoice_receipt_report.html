@@ -8,9 +8,7 @@
 
 <section class="content">
   <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
-    <!-- /.row -->
-    <!-- Main row -->
+    
     <div class="row">
       <div class="col">
         <div class="card card-primary">
@@ -52,7 +50,8 @@
                         name="year" placeholder="السنة" 
                         {% if year %}
                         value = "{{year}}"
-                          
+                        {% else %}
+                        value = "0"
                         {% endif %}
                           >
                             </div>
@@ -93,7 +92,7 @@
                               {{customer.total_receipt}}
                             </td>
                             <td><a href="{% url 'customer_balance' customer.customer_id priod year %}"  id="customer_invoices">{{customer.total_invoice}}</a>  </td>
-                            <td><a href="{% url 'customer_balance' customer.customer_id priod  year%}"  id="customer_invoices">{{customer.customer_name}}</a>  </td>
+                            <td><a href="{% url 'customer_balance' customer.customer_id priod  year %}"  id="customer_invoices">{{customer.customer_name}}</a>  </td>
                           </tr>
                           {% endfor %}
 

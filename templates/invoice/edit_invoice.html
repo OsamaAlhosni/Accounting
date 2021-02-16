@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
-
 {% block content %}
 
 <body class="hold-transition sidebar-mini">
@@ -11,8 +9,6 @@
     <div class="content-wrapper">
       <!-- Main content -->
       <section class="content">
-        
-          
         <form action="" method="POST">
           {% csrf_token %}
           <div class="row">
@@ -32,13 +28,9 @@
                     <label for="inputName">قيمة الديون المرحلة</label>
                     <input type="date" name="tt" id="tt" class="form-control text-right"
                       value="{{invoice.balance_to|date:'Y-m-d'}}">
-
                   </div>
-
                 </div>
-                <!-- /.card-body -->
               </div>
-              <!-- /.card -->
             </div>
             <div class="col-md-6 text-right">
               <div class="card card-primary">
@@ -67,13 +59,9 @@
                       value="{{invoice.notes}}">
                   </div>
                 </div>
-                <!-- /.card-body -->
               </div>
-              <!-- /.card -->
             </div>
-
           </div>
-
           <div class="row">
             <div class="col-12">
               {% if message %}
@@ -91,15 +79,8 @@
         </form>
 
       </section>
-      <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
-
-
   </div>
-  <!-- ./wrapper -->
-
-  <!-- jQuery -->
   <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
   <!-- Bootstrap 4 -->
   <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
