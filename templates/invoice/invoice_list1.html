@@ -10,21 +10,21 @@
               <div class="card-header">
                 <h3 class="card-title">قائمة الفواتير الصادرة</h3>
               </div>
-              <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th></th>
-                    <th style="width: 10%">القيمة</th>
-                    <th style="width: 5%">الفترة</th>
-                    <th style="width: 5%">السنة</th>
-                    <th style="width: 10%">رقم الفاتورة</th>
-                    <th style="width: 10%" class="text-center">إلى</th>
-                    <th style="width: 10%" class="text-right">من</th>
-                    <th style="width: 10%">التسويات</th>
-                    <th style="width: 20%">إسم الجهة</th>
-                    <th style="width: 1%">#</th>
+                    <th class="text-center">عملية</th>
+                    <th class="text-center">القيمة</th>
+                    <th class="text-center">الفترة</th>
+                    <th class="text-center">السنة</th>
+                    <th class="text-center">رقم الفاتورة</th>
+                    <th  class="text-center">إلى</th>
+                    <th  class="text-center">من</th>
+                    <th class="text-center">التسويات</th>
+                    <th class="text-center">إسم الجهة</th>
+                    <th class="text-center">#</th>
+
               </tr>
                   </thead>
                   <tbody>
@@ -36,17 +36,17 @@
                         <a class="btn btn-info btn-sm" href="{% url 'edit_invoice' invoice.id %}">
                           <i class="fas fa-pencil-alt"> </i> تعديل </a>
                       </td>
-                      <td>{{invoice.invoice_amount|intcomma}}</td>
-                      <td>{{invoice.proid}}</td>
-                      <td>{{invoice.tyear}}</td>
-                      <td>{{invoice.Invoice_no}}</td>
-                      <td>{{invoice.balance_to|date:'Y-m-d'}}</td>
-                      <td>{{invoice.from_date|date:'Y-m-d'}}</td>
-                      <td>{{invoice.balance|intcomma}}</td>
-                      <td><a> {{invoice.customer_name}} </a> <br /><small class="text-success"><i class="fa fa-upload" aria-hidden="true"></i>تاريخ التحميل<br />{{invoice.imported_date}}
+                      <td class="text-center">{{invoice.invoice_amount|intcomma}}</td>
+                      <td class="text-center">{{invoice.proid}}</td>
+                      <td class="text-center">{{invoice.tyear}}</td>
+                      <td class="text-center">{{invoice.Invoice_no}}</td>
+                      <td class="text-center">{{invoice.balance_to|date:'Y-m-d'}}</td>
+                      <td class="text-center">{{invoice.from_date|date:'Y-m-d'}}</td>
+                      <td class="text-center">{{invoice.balance|intcomma}}</td>
+                      <td class="text-center"><a> {{invoice.customer_name}} </a> <br /><small class="text-success"><i class="fa fa-upload" aria-hidden="true"></i>تاريخ التحميل<br />{{invoice.imported_date}}
                         </small>
                       </td>
-                      <td>{{invoice.customer_id_id}}</td>
+                      <td class="text-center">{{invoice.customer_id_id}}</td>
                 </tr>
                 {% endfor %}
                   </tbody>
@@ -54,7 +54,6 @@
                   </tfoot>
                 </table>
               </div>
-              <!-- /.card-body -->
             </div>
           </div>
         </div>
