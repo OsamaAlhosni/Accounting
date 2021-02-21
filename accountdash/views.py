@@ -36,7 +36,7 @@ def index(request):
     # Total All Receipts
     all_receipt_amount = Receipt.objects.aggregate(
         sum=Sum('receipt_amount')).get('sum')
-    print(all_receipt_amount)
+    
     if all_receipt_amount:
         all_receipt_amount = f"د.ل {intcomma('{:0.3f}'.format(all_receipt_amount))}"
     else:
@@ -250,7 +250,7 @@ def total_inv_rec_report(request):
         priod = request.POST.get('priod')
         cat = request.POST.get('cat')
         year = request.POST.get('year')
-        print(year)
+        
         if year and int(priod) > 0:
             iqueryset = Invoice.objects.filter(invoice_amount__gt=0).values('customer_id_id').annotate(
                 total_sales=Sum('invoice_amount')).filter(customer_id__customer_cat__id=cat, proid=priod, tyear=year)
@@ -420,7 +420,7 @@ def customer_balance(request,customer_id,priod,year):
     customer_invoices = Invoice.objects.filter(
             invoice_amount__gt=0, customer_id_id=customer_id)
     if priod != 0:            
-        print(priod)
+        
         customer_invoices = customer_invoices.filter(proid=priod)
     if year != 0:
        
